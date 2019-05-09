@@ -94,6 +94,9 @@
 					<i class="fa fa-search-plus"></i> 查看
 				</button>
 			</shiro:hasPermission>
+		<button id="openSearch" class="btn btn-default" onclick="search()">
+			<i class="glyphicon glyphicon-search"></i> 搜索
+		</button>
 		    </div>
 		
 	<!-- 表格 -->
@@ -115,5 +118,9 @@
 	</div>
 	</div>
 	</div>
+
+	<script type="text/javascript" charset="UTF-8">
+		<%@include file="../../../static/common/js/search.js" %>
+	</script>
 </body>
 </html>
