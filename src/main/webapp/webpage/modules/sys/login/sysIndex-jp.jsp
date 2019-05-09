@@ -40,7 +40,7 @@
 				<span class="icon-bar"></span>
 			</button>
 
-			<a class="navbar-brand J_menuItem" href="${ctx}/home" data-index="0">JeePlus快速开发框架</a>
+			<a class="navbar-brand J_menuItem" href="${ctx}/home" data-index="0">捷特CRM管理系统</a>
 		</div>
 	</div>
 	<div class="navbar-container container-fluid">
@@ -343,7 +343,7 @@
 	</div>
 
 	<div class="footer">
-		<div class="pull-left"><a href="http://www.jeeplus.org">http://www.jeeplus.org</a> &copy; 2015-2025</div>
+		<div class="pull-left"><%--<a href="http://www.jeeplus.org">http://www.jeeplus.org</a> &copy; 2015-2025--%></div>
 	</div>
 
 </section>

@@ -192,7 +192,7 @@
 		<div class="row">
 			<div class="col-md-4 col-lg-4 col-md-offset-4 col-lg-offset-4">
 				<img  class="img-circle" src="${ctxStatic}/common/images/flat-avatar.png" class="user-avatar" />
-				<h1>Jeeplus</h1>
+				<h1>捷特CRM管理系统</h1>
 				<sys:message content="${message}" showType="1"/>
 				<form:form id="inputForm" modelAttribute="user" action="${ctx}/sys/register/registerUser" method="post" class="form-group form-horizontal">
 							<input  type="hidden" value="wangba" name="roleName"><!-- 默认注册用户都是网吧管理员 -->
@@ -225,7 +225,7 @@
 									<input name="ck1" type="checkbox" />
 									<span class="lbl">
 										我接受
-										<a href="#"><font  color="white">《JeePlus用户注册协议》</font></a>
+										<a href="#"><font  color="white">《捷特CRM管理系统用户注册协议》</font></a>
 									</span>
 									<label id="ck1-error" class="error" for="ck1" style="display: none;">必须接受用户协议</label>
 								</label>
