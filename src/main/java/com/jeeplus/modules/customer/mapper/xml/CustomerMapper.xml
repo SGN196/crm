@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.customer.mapper.CustomerMapper">
+    
+	<sql id="customerColumns">
+		a.id AS "id",
+		a.f_erpcusid AS "erpcusId",
+		a.f_orgid AS "orgId",
+		a.f_deptid AS "deptId",
+		a.f_empid AS "empId",
+		a.f_number AS "number",
+		a.f_name AS "name",
+		a.f_state AS "state",
+		a.f_ispublic AS "isPublic",
+		a.f_sourceid AS "sourceId",
+		a.f_statusid AS "statusId",
+		a.f_areaid AS "areaId",
+		a.f_address AS "address",
+		a.f_contactid AS "contactId",
+		a.f_provincelid AS "provincelId",
+		a.f_cityid AS "cityId",
+		a.f_countryid AS "countryId",
+		a.f_streetid AS "streetId",
+		a.f_detailaddress AS "detailAddress",
+		a.f_gps AS "gps",
+		a.f_shortname AS "shortName",
+		a.f_industoryid AS "industoryId",
+		a.f_cuslevel AS "cusLevel",
+		a.f_fax AS "fax",
+		a.f_website AS "webSite",
+		a.f_email AS "email",
+		a.f_bank AS "bank",
+		a.f_account AS "account",
+		a.f_propertyid AS "propertyId",
+		a.f_creditcode AS "creditCode",
+		a.f_business AS "business",
+		a.f_recent AS "recent",
+		a.f_legalperson AS "legalPerson",
+		a.f_usedname AS "usedName",
+		a.f_competitor AS "competitor",
+		a.f_coreadvantage AS "coreAdvantage",
+		a.f_industryposition AS "industryPosition",
+		a.f_industrystandard AS "industryStandard",
+		a.f_turnoveryearly AS "turnoverYearly",
+		a.f_taxyearly AS "taxYearly",
+		a.f_workernum AS "workerNum",
+		a.f_researchernum AS "researcherNum",
+		a.f_ratea AS "rateA",
+		a.f_juniornum AS "juniorNum",
+		a.f_undergraduatenum AS "undergraduateNum",
+		a.f_masternum AS "masterNum",
+		a.f_primarynum AS "primaryNum",
+		a.f_intermediatenum AS "intermediateNum",
+		a.f_intellectualfunds AS "intellectualFunds",
+		a.f_rateb AS "rateB",
+		a.f_inventionpatentnum AS "inventionPatentNum",
+		a.f_appearancepatentnum AS "appearancePatentNum",
+		a.f_trademarknum AS "trademarkNum",
+		a.f_practicalpatentnum AS "practicalPatentNum",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="customerJoins">
+		
+	</sql>
+	
+    
+	<select id="get" resultType="Customer" >
+		SELECT 
+			<include refid="customerColumns"/>
+		FROM tb_customer a
+		<include refid="customerJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Customer" >
+		SELECT 
+			<include refid="customerColumns"/>
+		FROM tb_customer a
+		<include refid="customerJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+			<if test="deptId != null and deptId != ''">
+				AND a.f_deptid LIKE 
+					<if test="dbName == 'oracle'">'%'||#{deptId}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{deptId}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{deptId},'%')</if>
+			</if>
+			<if test="name != null and name != ''">
+				AND a.f_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="statusId != null and statusId != ''">
+				AND a.f_statusid = #{statusId}
+			</if>
+			<if test="industoryId != null and industoryId != ''">
+				AND a.f_industoryid = #{industoryId}
+			</if>
+			<if test="cusLevel != null and cusLevel != ''">
+				AND a.f_cuslevel = #{cusLevel}
+			</if>
+			<if test="legalPerson != null and legalPerson != ''">
+				AND a.f_legalperson LIKE 
+					<if test="dbName == 'oracle'">'%'||#{legalPerson}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{legalPerson}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{legalPerson},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Customer" >
+		SELECT 
+			<include refid="customerColumns"/>
+		FROM tb_customer a
+		<include refid="customerJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_customer(
+			id,
+			f_erpcusid,
+			f_orgid,
+			f_deptid,
+			f_empid,
+			f_number,
+			f_name,
+			f_state,
+			f_ispublic,
+			f_sourceid,
+			f_statusid,
+			f_areaid,
+			f_address,
+			f_contactid,
+			f_provincelid,
+			f_cityid,
+			f_countryid,
+			f_streetid,
+			f_detailaddress,
+			f_gps,
+			f_shortname,
+			f_industoryid,
+			f_cuslevel,
+			f_fax,
+			f_website,
+			f_email,
+			f_bank,
+			f_account,
+			f_propertyid,
+			f_creditcode,
+			f_business,
+			f_recent,
+			f_legalperson,
+			f_usedname,
+			f_competitor,
+			f_coreadvantage,
+			f_industryposition,
+			f_industrystandard,
+			f_turnoveryearly,
+			f_taxyearly,
+			f_workernum,
+			f_researchernum,
+			f_ratea,
+			f_juniornum,
+			f_undergraduatenum,
+			f_masternum,
+			f_primarynum,
+			f_intermediatenum,
+			f_intellectualfunds,
+			f_rateb,
+			f_inventionpatentnum,
+			f_appearancepatentnum,
+			f_trademarknum,
+			f_practicalpatentnum,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{erpcusId},
+			#{orgId},
+			#{deptId},
+			#{empId},
+			#{number},
+			#{name},
+			#{state},
+			#{isPublic},
+			#{sourceId},
+			#{statusId},
+			#{areaId},
+			#{address},
+			#{contactId},
+			#{provincelId},
+			#{cityId},
+			#{countryId},
+			#{streetId},
+			#{detailAddress},
+			#{gps},
+			#{shortName},
+			#{industoryId},
+			#{cusLevel},
+			#{fax},
+			#{webSite},
+			#{email},
+			#{bank},
+			#{account},
+			#{propertyId},
+			#{creditCode},
+			#{business},
+			#{recent},
+			#{legalPerson},
+			#{usedName},
+			#{competitor},
+			#{coreAdvantage},
+			#{industryPosition},
+			#{industryStandard},
+			#{turnoverYearly},
+			#{taxYearly},
+			#{workerNum},
+			#{researcherNum},
+			#{rateA},
+			#{juniorNum},
+			#{undergraduateNum},
+			#{masterNum},
+			#{primaryNum},
+			#{intermediateNum},
+			#{intellectualFunds},
+			#{rateB},
+			#{inventionPatentNum},
+			#{appearancePatentNum},
+			#{trademarkNum},
+			#{practicalPatentNum},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_customer SET 	
+			f_erpcusid = #{erpcusId},
+			f_orgid = #{orgId},
+			f_deptid = #{deptId},
+			f_empid = #{empId},
+			f_number = #{number},
+			f_name = #{name},
+			f_state = #{state},
+			f_ispublic = #{isPublic},
+			f_sourceid = #{sourceId},
+			f_statusid = #{statusId},
+			f_areaid = #{areaId},
+			f_address = #{address},
+			f_contactid = #{contactId},
+			f_provincelid = #{provincelId},
+			f_cityid = #{cityId},
+			f_countryid = #{countryId},
+			f_streetid = #{streetId},
+			f_detailaddress = #{detailAddress},
+			f_gps = #{gps},
+			f_shortname = #{shortName},
+			f_industoryid = #{industoryId},
+			f_cuslevel = #{cusLevel},
+			f_fax = #{fax},
+			f_website = #{webSite},
+			f_email = #{email},
+			f_bank = #{bank},
+			f_account = #{account},
+			f_propertyid = #{propertyId},
+			f_creditcode = #{creditCode},
+			f_business = #{business},
+			f_recent = #{recent},
+			f_legalperson = #{legalPerson},
+			f_usedname = #{usedName},
+			f_competitor = #{competitor},
+			f_coreadvantage = #{coreAdvantage},
+			f_industryposition = #{industryPosition},
+			f_industrystandard = #{industryStandard},
+			f_turnoveryearly = #{turnoverYearly},
+			f_taxyearly = #{taxYearly},
+			f_workernum = #{workerNum},
+			f_researchernum = #{researcherNum},
+			f_ratea = #{rateA},
+			f_juniornum = #{juniorNum},
+			f_undergraduatenum = #{undergraduateNum},
+			f_masternum = #{masterNum},
+			f_primarynum = #{primaryNum},
+			f_intermediatenum = #{intermediateNum},
+			f_intellectualfunds = #{intellectualFunds},
+			f_rateb = #{rateB},
+			f_inventionpatentnum = #{inventionPatentNum},
+			f_appearancepatentnum = #{appearancePatentNum},
+			f_trademarknum = #{trademarkNum},
+			f_practicalpatentnum = #{practicalPatentNum},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM tb_customer
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE tb_customer SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="Customer" statementType="STATEMENT">
+		select * FROM tb_customer  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>
