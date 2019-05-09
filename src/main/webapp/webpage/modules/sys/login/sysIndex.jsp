@@ -24,7 +24,7 @@
 				<span class="icon-bar"></span>
 			</button>
 
-			<a class="navbar-brand J_menuItem"  href="${ctx}/home">JeePlus </a>
+			<a class="navbar-brand J_menuItem"  href="${ctx}/home">捷特CRM管理系统 </a>
 		</div>
 		<div class="collapse navbar-collapse">
 			<form class="navbar-form navbar-left" role="search">
@@ -280,7 +280,7 @@
             </div>
             
            <div class="footer">
-                <div class="pull-left"><a href="http://www.jeeplus.org">http://www.jeeplus.org</a> &copy; 2015-2025</div>
+                <div class="pull-left"><%--<a href="http://www.jeeplus.org">http://www.jeeplus.org</a> &copy; 2015-2025--%></div>
             </div>
           
 </section>
