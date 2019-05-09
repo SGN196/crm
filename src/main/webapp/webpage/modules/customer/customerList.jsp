@@ -21,38 +21,38 @@
 	<div id="search-collapse" class="collapse">
 		<div class="accordion-inner">
 			<form:form id="searchForm" modelAttribute="customer" class="form form-horizontal well clearfix">
-			 <div class="col-xs-12 col-sm-6 col-md-4">
+				<div class="col-xs-12 col-sm-6 col-md-2">
+					<label class="label-item single-overflow pull-left" title="客户名称：">客户名称：</label>
+					<form:input path="name" htmlEscape="false" maxlength="255"  class=" form-control"/>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-2">
+					<label class="label-item single-overflow pull-left" title="客户法人：">客户法人：</label>
+					<form:input path="legalPerson" htmlEscape="false" maxlength="100"  class=" form-control"/>
+				</div>
+			 <div class="col-xs-12 col-sm-6 col-md-2">
 				<label class="label-item single-overflow pull-left" title="所属部门Id：">所属部门Id：</label>
 				<form:input path="deptId" htmlEscape="false" maxlength="64"  class=" form-control"/>
 			</div>
-			 <div class="col-xs-12 col-sm-6 col-md-4">
-				<label class="label-item single-overflow pull-left" title="客户名称：">客户名称：</label>
-				<form:input path="name" htmlEscape="false" maxlength="255"  class=" form-control"/>
-			</div>
-			 <div class="col-xs-12 col-sm-6 col-md-4">
+			 <div class="col-xs-12 col-sm-6 col-md-2">
 				<label class="label-item single-overflow pull-left" title="跟进状态Id：">跟进状态Id：</label>
 				<form:select path="statusId"  class="form-control m-b">
 					<form:option value="" label=""/>
 					<form:options items="${fns:getDictList('')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 			</div>
-			 <div class="col-xs-12 col-sm-6 col-md-4">
+				<div class="col-xs-12 col-sm-6 col-md-2">
+					<label class="label-item single-overflow pull-left" title="客户等级：">客户等级：</label>
+					<form:select path="cusLevel"  class="form-control m-b">
+						<form:option value="" label=""/>
+						<form:options items="${fns:getDictList('')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+					</form:select>
+				</div>
+			 <div class="col-xs-12 col-sm-6 col-md-2">
 				<label class="label-item single-overflow pull-left" title="行业Id：">行业Id：</label>
 				<form:select path="industoryId"  class="form-control m-b">
 					<form:option value="" label=""/>
 					<form:options items="${fns:getDictList('')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
-			</div>
-			 <div class="col-xs-12 col-sm-6 col-md-4">
-				<label class="label-item single-overflow pull-left" title="客户等级：">客户等级：</label>
-				<form:select path="cusLevel"  class="form-control m-b">
-					<form:option value="" label=""/>
-					<form:options items="${fns:getDictList('')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
-				</form:select>
-			</div>
-			 <div class="col-xs-12 col-sm-6 col-md-4">
-				<label class="label-item single-overflow pull-left" title="客户法人：">客户法人：</label>
-				<form:input path="legalPerson" htmlEscape="false" maxlength="100"  class=" form-control"/>
 			</div>
 		 <div class="col-xs-12 col-sm-6 col-md-4">
 			<div style="margin-top:26px">
