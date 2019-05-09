@@ -84,27 +84,13 @@ $(document).ready(function() {
 		        checkbox: true
 		       
 		    }
-			,{
+			/*,{
 		        field: 'erpcusId',
 		        title: 'ERP系统客户Id',
 		        sortable: true,
 		        sortName: 'erpcusId'
-		        ,formatter:function(value, row , index){
-		        	value = jp.unescapeHTML(value);
-				   <c:choose>
-					   <c:when test="${fns:hasPermission('customer:customer:edit')}">
-					      return "<a href='javascript:edit(\""+row.id+"\")'>"+value+"</a>";
-				      </c:when>
-					  <c:when test="${fns:hasPermission('customer:customer:view')}">
-					      return "<a href='javascript:view(\""+row.id+"\")'>"+value+"</a>";
-				      </c:when>
-					  <c:otherwise>
-					      return value;
-				      </c:otherwise>
-				   </c:choose>
-		         }
-		       
-		    }
+
+		    }*/
 			,{
 		        field: 'orgId',
 		        title: '所属公司Id',
@@ -126,21 +112,35 @@ $(document).ready(function() {
 		        sortName: 'empId'
 		       
 		    }
-			,{
+			/*,{
 		        field: 'number',
 		        title: '客户代码',
 		        sortable: true,
 		        sortName: 'number'
 		       
-		    }
+		    }*/
 			,{
 		        field: 'name',
 		        title: '客户名称',
 		        sortable: true,
 		        sortName: 'name'
+				,formatter:function(value, row , index){
+				   value = jp.unescapeHTML(value);
+				<c:choose>
+				   <c:when test="${fns:hasPermission('customer:customer:edit')}">
+				   return "<a href='javascript:edit(\""+row.id+"\")'>"+value+"</a>";
+				</c:when>
+				   <c:when test="${fns:hasPermission('customer:customer:view')}">
+				   return "<a href='javascript:view(\""+row.id+"\")'>"+value+"</a>";
+				</c:when>
+				   <c:otherwise>
+				   return value;
+				</c:otherwise>
+				   </c:choose>
+				}
 		       
 		    }
-			,{
+			/*,{
 		        field: 'state',
 		        title: '使用状态',
 		        sortable: true,
@@ -153,7 +153,7 @@ $(document).ready(function() {
 		        sortable: true,
 		        sortName: 'isPublic'
 		       
-		    }
+		    }*/
 			,{
 		        field: 'sourceId',
 		        title: '客户来源Id',
@@ -171,7 +171,7 @@ $(document).ready(function() {
 		        }
 		       
 		    }
-			,{
+			/*,{
 		        field: 'areaId',
 		        title: '区域Id',
 		        sortable: true,
@@ -240,7 +240,7 @@ $(document).ready(function() {
 		        sortable: true,
 		        sortName: 'shortName'
 		       
-		    }
+		    }*/
 			,{
 		        field: 'industoryId',
 		        title: '行业Id',
@@ -261,7 +261,7 @@ $(document).ready(function() {
 		        }
 		       
 		    }
-			,{
+			/*,{
 		        field: 'fax',
 		        title: '传真',
 		        sortable: true,
@@ -477,7 +477,7 @@ $(document).ready(function() {
 		        sortable: true,
 		        sortName: 'practicalPatentNum'
 		       
-		    }
+		    }*/
 			,{
 		        field: 'remarks',
 		        title: '备注信息',
