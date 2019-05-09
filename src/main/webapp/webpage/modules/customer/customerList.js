@@ -84,13 +84,6 @@ $(document).ready(function() {
 		        checkbox: true
 		       
 		    }
-			/*,{
-		        field: 'erpcusId',
-		        title: 'ERP系统客户Id',
-		        sortable: true,
-		        sortName: 'erpcusId'
-
-		    }*/
 			,{
 		        field: 'orgId',
 		        title: '所属公司Id',
@@ -112,13 +105,6 @@ $(document).ready(function() {
 		        sortName: 'empId'
 		       
 		    }
-			/*,{
-		        field: 'number',
-		        title: '客户代码',
-		        sortable: true,
-		        sortName: 'number'
-		       
-		    }*/
 			,{
 		        field: 'name',
 		        title: '客户名称',
@@ -140,20 +126,6 @@ $(document).ready(function() {
 				}
 		       
 		    }
-			/*,{
-		        field: 'state',
-		        title: '使用状态',
-		        sortable: true,
-		        sortName: 'state'
-		       
-		    }
-			,{
-		        field: 'isPublic',
-		        title: '是否公海',
-		        sortable: true,
-		        sortName: 'isPublic'
-		       
-		    }*/
 			,{
 		        field: 'sourceId',
 		        title: '客户来源Id',
@@ -171,76 +143,6 @@ $(document).ready(function() {
 		        }
 		       
 		    }
-			/*,{
-		        field: 'areaId',
-		        title: '区域Id',
-		        sortable: true,
-		        sortName: 'areaId'
-		       
-		    }
-			,{
-		        field: 'address',
-		        title: '客户地址',
-		        sortable: true,
-		        sortName: 'address'
-		       
-		    }
-			,{
-		        field: 'contactId',
-		        title: '主联系人Id',
-		        sortable: true,
-		        sortName: 'contactId'
-		       
-		    }
-			,{
-		        field: 'provincelId',
-		        title: '省份Id',
-		        sortable: true,
-		        sortName: 'provincelId'
-		       
-		    }
-			,{
-		        field: 'cityId',
-		        title: '城市Id',
-		        sortable: true,
-		        sortName: 'cityId'
-		       
-		    }
-			,{
-		        field: 'countryId',
-		        title: '区县Id',
-		        sortable: true,
-		        sortName: 'countryId'
-		       
-		    }
-			,{
-		        field: 'streetId',
-		        title: '镇街Id',
-		        sortable: true,
-		        sortName: 'streetId'
-		       
-		    }
-			,{
-		        field: 'detailAddress',
-		        title: '详细地址',
-		        sortable: true,
-		        sortName: 'detailAddress'
-		       
-		    }
-			,{
-		        field: 'gps',
-		        title: 'GPS定位',
-		        sortable: true,
-		        sortName: 'gps'
-		       
-		    }
-			,{
-		        field: 'shortName',
-		        title: '简称',
-		        sortable: true,
-		        sortName: 'shortName'
-		       
-		    }*/
 			,{
 		        field: 'industoryId',
 		        title: '行业Id',
@@ -261,223 +163,6 @@ $(document).ready(function() {
 		        }
 		       
 		    }
-			/*,{
-		        field: 'fax',
-		        title: '传真',
-		        sortable: true,
-		        sortName: 'fax'
-		       
-		    }
-			,{
-		        field: 'webSite',
-		        title: '官网地址',
-		        sortable: true,
-		        sortName: 'webSite'
-		       
-		    }
-			,{
-		        field: 'email',
-		        title: '官方邮箱',
-		        sortable: true,
-		        sortName: 'email'
-		       
-		    }
-			,{
-		        field: 'bank',
-		        title: '开户行',
-		        sortable: true,
-		        sortName: 'bank'
-		       
-		    }
-			,{
-		        field: 'account',
-		        title: '银行账号',
-		        sortable: true,
-		        sortName: 'account'
-		       
-		    }
-			,{
-		        field: 'propertyId',
-		        title: '企业性质Id',
-		        sortable: true,
-		        sortName: 'propertyId'
-		       
-		    }
-			,{
-		        field: 'creditCode',
-		        title: '统一信用代码',
-		        sortable: true,
-		        sortName: 'creditCode'
-		       
-		    }
-			,{
-		        field: 'business',
-		        title: '经营范围',
-		        sortable: true,
-		        sortName: 'business'
-		       
-		    }
-			,{
-		        field: 'recent',
-		        title: '经营近况',
-		        sortable: true,
-		        sortName: 'recent'
-		       
-		    }
-			,{
-		        field: 'legalPerson',
-		        title: '客户法人',
-		        sortable: true,
-		        sortName: 'legalPerson'
-		       
-		    }
-			,{
-		        field: 'usedName',
-		        title: '曾用名',
-		        sortable: true,
-		        sortName: 'usedName'
-		       
-		    }
-			,{
-		        field: 'competitor',
-		        title: '竞争对手',
-		        sortable: true,
-		        sortName: 'competitor'
-		       
-		    }
-			,{
-		        field: 'coreAdvantage',
-		        title: '核心优势',
-		        sortable: true,
-		        sortName: 'coreAdvantage'
-		       
-		    }
-			,{
-		        field: 'industryPosition',
-		        title: '行业地位',
-		        sortable: true,
-		        sortName: 'industryPosition'
-		       
-		    }
-			,{
-		        field: 'industryStandard',
-		        title: '行业标准',
-		        sortable: true,
-		        sortName: 'industryStandard'
-		       
-		    }
-			,{
-		        field: 'turnoverYearly',
-		        title: '年营业额',
-		        sortable: true,
-		        sortName: 'turnoverYearly'
-		       
-		    }
-			,{
-		        field: 'taxYearly',
-		        title: '年纳税额',
-		        sortable: true,
-		        sortName: 'taxYearly'
-		       
-		    }
-			,{
-		        field: 'workerNum',
-		        title: '职工总人数',
-		        sortable: true,
-		        sortName: 'workerNum'
-		       
-		    }
-			,{
-		        field: 'researcherNum',
-		        title: '科研人员人数',
-		        sortable: true,
-		        sortName: 'researcherNum'
-		       
-		    }
-			,{
-		        field: 'rateA',
-		        title: '科研人员占比',
-		        sortable: true,
-		        sortName: 'rateA'
-		       
-		    }
-			,{
-		        field: 'juniorNum',
-		        title: '大专科研人数',
-		        sortable: true,
-		        sortName: 'juniorNum'
-		       
-		    }
-			,{
-		        field: 'undergraduateNum',
-		        title: '本科科研人数',
-		        sortable: true,
-		        sortName: 'undergraduateNum'
-		       
-		    }
-			,{
-		        field: 'masterNum',
-		        title: '硕士科研人数',
-		        sortable: true,
-		        sortName: 'masterNum'
-		       
-		    }
-			,{
-		        field: 'primaryNum',
-		        title: '初职科研人数',
-		        sortable: true,
-		        sortName: 'primaryNum'
-		       
-		    }
-			,{
-		        field: 'intermediateNum',
-		        title: '中职科研人数',
-		        sortable: true,
-		        sortName: 'intermediateNum'
-		       
-		    }
-			,{
-		        field: 'intellectualFunds',
-		        title: '知识产权经费',
-		        sortable: true,
-		        sortName: 'intellectualFunds'
-		       
-		    }
-			,{
-		        field: 'rateB',
-		        title: '经费占比',
-		        sortable: true,
-		        sortName: 'rateB'
-		       
-		    }
-			,{
-		        field: 'inventionPatentNum',
-		        title: '发明专利数量',
-		        sortable: true,
-		        sortName: 'inventionPatentNum'
-		       
-		    }
-			,{
-		        field: 'appearancePatentNum',
-		        title: '外观专利数量',
-		        sortable: true,
-		        sortName: 'appearancePatentNum'
-		       
-		    }
-			,{
-		        field: 'trademarkNum',
-		        title: '商标版权数量',
-		        sortable: true,
-		        sortName: 'trademarkNum'
-		       
-		    }
-			,{
-		        field: 'practicalPatentNum',
-		        title: '实用型专利数量',
-		        sortable: true,
-		        sortName: 'practicalPatentNum'
-		       
-		    }*/
 			,{
 		        field: 'remarks',
 		        title: '备注信息',
