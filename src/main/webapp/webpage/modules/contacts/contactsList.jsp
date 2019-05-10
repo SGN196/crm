@@ -21,25 +21,25 @@
 	<div id="search-collapse" class="collapse">
 		<div class="accordion-inner">
 			<form:form id="searchForm" modelAttribute="contacts" class="form form-horizontal well clearfix">
-			 <div class="col-xs-12 col-sm-6 col-md-4">
+			 <div class="col-xs-12 col-sm-6 col-md-2">
 				<label class="label-item single-overflow pull-left" title="联系人姓名：">联系人姓名：</label>
 				<form:input path="name" htmlEscape="false" maxlength="200"  class=" form-control"/>
 			</div>
-			 <div class="col-xs-12 col-sm-6 col-md-4">
+			 <div class="col-xs-12 col-sm-6 col-md-2">
 				<label class="label-item single-overflow pull-left" title="性别：">性别：</label>
 				<form:select path="gender"  class="form-control m-b">
 					<form:option value="" label=""/>
 					<form:options items="${fns:getDictList('')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 			</div>
-			 <div class="col-xs-12 col-sm-6 col-md-4">
+			 <div class="col-xs-12 col-sm-6 col-md-2">
 				<label class="label-item single-overflow pull-left" title="部门：">部门：</label>
 				<form:select path="department"  class="form-control m-b">
 					<form:option value="" label=""/>
 					<form:options items="${fns:getDictList('')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 			</div>
-			 <div class="col-xs-12 col-sm-6 col-md-4">
+			 <div class="col-xs-12 col-sm-6 col-md-2">
 				<label class="label-item single-overflow pull-left" title="职务：">职务：</label>
 				<form:select path="title"  class="form-control m-b">
 					<form:option value="" label=""/>
@@ -86,6 +86,9 @@
 					<i class="fa fa-search-plus"></i> 查看
 				</button>
 			</shiro:hasPermission>
+		<button id="openSearch" class="btn btn-default" onclick="search()">
+			<i class="glyphicon glyphicon-search"></i> 搜索
+		</button>
 		    </div>
 		
 	<!-- 表格 -->
@@ -107,5 +110,9 @@
 	</div>
 	</div>
 	</div>
+
+	<script type="text/javascript" charset="UTF-8">
+		<%@include file="../../../static/common/js/search.js" %>
+	</script>
 </body>
 </html>
