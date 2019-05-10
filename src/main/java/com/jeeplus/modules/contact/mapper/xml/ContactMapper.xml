@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.contact.mapper.ContactMapper">
+    
+	<sql id="contactColumns">
+		a.id AS "id",
+		a.f_cusid AS "cusId",
+		a.f_name AS "name",
+		a.f_gender AS "gender",
+		a.f_state AS "state",
+		a.f_cardid AS "cardId",
+		a.f_department AS "department",
+		a.f_title AS "title",
+		a.f_officephone AS "officePhone",
+		a.f_mobile AS "mobile",
+		a.f_email AS "email",
+		a.f_qqnumber AS "qqNumber",
+		a.f_picture AS "picture",
+		a.f_wxid AS "wxId",
+		a.f_influence AS "influence",
+		a.f_description AS "description",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="contactJoins">
+		
+	</sql>
+	
+    
+	<select id="get" resultType="Contact" >
+		SELECT 
+			<include refid="contactColumns"/>
+		FROM tb_contact a
+		<include refid="contactJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Contact" >
+		SELECT 
+			<include refid="contactColumns"/>
+		FROM tb_contact a
+		<include refid="contactJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+			<if test="name != null and name != ''">
+				AND a.f_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="gender != null and gender != ''">
+				AND a.f_gender = #{gender}
+			</if>
+			<if test="department != null and department != ''">
+				AND a.f_department = #{department}
+			</if>
+			<if test="title != null and title != ''">
+				AND a.f_title = #{title}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Contact" >
+		SELECT 
+			<include refid="contactColumns"/>
+		FROM tb_contact a
+		<include refid="contactJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_contact(
+			id,
+			f_cusid,
+			f_name,
+			f_gender,
+			f_state,
+			f_cardid,
+			f_department,
+			f_title,
+			f_officephone,
+			f_mobile,
+			f_email,
+			f_qqnumber,
+			f_picture,
+			f_wxid,
+			f_influence,
+			f_description,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{cusId},
+			#{name},
+			#{gender},
+			#{state},
+			#{cardId},
+			#{department},
+			#{title},
+			#{officePhone},
+			#{mobile},
+			#{email},
+			#{qqNumber},
+			#{picture},
+			#{wxId},
+			#{influence},
+			#{description},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_contact SET 	
+			f_cusid = #{cusId},
+			f_name = #{name},
+			f_gender = #{gender},
+			f_state = #{state},
+			f_cardid = #{cardId},
+			f_department = #{department},
+			f_title = #{title},
+			f_officephone = #{officePhone},
+			f_mobile = #{mobile},
+			f_email = #{email},
+			f_qqnumber = #{qqNumber},
+			f_picture = #{picture},
+			f_wxid = #{wxId},
+			f_influence = #{influence},
+			f_description = #{description},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM tb_contact
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE tb_contact SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="Contact" statementType="STATEMENT">
+		select * FROM tb_contact  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>
