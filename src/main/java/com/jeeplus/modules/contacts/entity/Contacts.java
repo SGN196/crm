@@ -1,7 +1,7 @@
 /**
  * Copyright &copy; 2015-2020 <a href="http://www.jeeplus.org/">JeePlus</a> All rights reserved.
  */
-package com.jeeplus.modules.contact.entity;
+package com.jeeplus.modules.contacts.entity;
 
 import javax.validation.constraints.NotNull;
 
@@ -13,7 +13,7 @@ import com.jeeplus.common.utils.excel.annotation.ExcelField;
  * @author Vigny
  * @version 2019-05-10
  */
-public class Contact extends DataEntity<Contact> {
+public class Contacts extends DataEntity<Contacts> {
 	
 	private static final long serialVersionUID = 1L;
 	private String cusId;		// 客户Id
@@ -32,11 +32,11 @@ public class Contact extends DataEntity<Contact> {
 	private String influence;		// 决策影响力
 	private String description;		// 性格描述
 	
-	public Contact() {
+	public Contacts() {
 		super();
 	}
 
-	public Contact(String id){
+	public Contacts(String id){
 		super(id);
 	}
 

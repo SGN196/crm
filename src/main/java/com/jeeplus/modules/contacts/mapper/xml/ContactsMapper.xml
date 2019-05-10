@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jeeplus.modules.contact.mapper.ContactMapper">
+<mapper namespace="com.jeeplus.modules.contacts.mapper.ContactsMapper">
     
-	<sql id="contactColumns">
+	<sql id="contactsColumns">
 		a.id AS "id",
 		a.f_cusid AS "cusId",
 		a.f_name AS "name",
@@ -27,24 +27,24 @@
 		a.del_flag AS "delFlag"
 	</sql>
 	
-	<sql id="contactJoins">
+	<sql id="contactsJoins">
 		
 	</sql>
 	
     
-	<select id="get" resultType="Contact" >
+	<select id="get" resultType="Contacts" >
 		SELECT 
-			<include refid="contactColumns"/>
-		FROM tb_contact a
-		<include refid="contactJoins"/>
+			<include refid="contactsColumns"/>
+		FROM tb_contacts a
+		<include refid="contactsJoins"/>
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultType="Contact" >
+	<select id="findList" resultType="Contacts" >
 		SELECT 
-			<include refid="contactColumns"/>
-		FROM tb_contact a
-		<include refid="contactJoins"/>
+			<include refid="contactsColumns"/>
+		FROM tb_contacts a
+		<include refid="contactsJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			${dataScope}
@@ -74,11 +74,11 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultType="Contact" >
+	<select id="findAllList" resultType="Contacts" >
 		SELECT 
-			<include refid="contactColumns"/>
-		FROM tb_contact a
-		<include refid="contactJoins"/>
+			<include refid="contactsColumns"/>
+		FROM tb_contacts a
+		<include refid="contactsJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			${dataScope}
@@ -94,7 +94,7 @@
 	</select>
 	
 	<insert id="insert">
-		INSERT INTO tb_contact(
+		INSERT INTO tb_contacts(
 			id,
 			f_cusid,
 			f_name,
@@ -144,7 +144,7 @@
 	</insert>
 	
 	<update id="update">
-		UPDATE tb_contact SET 	
+		UPDATE tb_contacts SET 	
 			f_cusid = #{cusId},
 			f_name = #{name},
 			f_gender = #{gender},
@@ -169,21 +169,21 @@
 	
 	<!--物理删除-->
 	<update id="delete">
-		DELETE FROM tb_contact
+		DELETE FROM tb_contacts
 		WHERE id = #{id}
 	</update>
 	
 	<!--逻辑删除-->
 	<update id="deleteByLogic">
-		UPDATE tb_contact SET 
+		UPDATE tb_contacts SET 
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
 	
 	
 	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
-	<select id="findUniqueByProperty" resultType="Contact" statementType="STATEMENT">
-		select * FROM tb_contact  where ${propertyName} = '${value}'
+	<select id="findUniqueByProperty" resultType="Contacts" statementType="STATEMENT">
+		select * FROM tb_contacts  where ${propertyName} = '${value}'
 	</select>
 	
 </mapper>

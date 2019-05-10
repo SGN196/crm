@@ -1,11 +1,11 @@
 /**
  * Copyright &copy; 2015-2020 <a href="http://www.jeeplus.org/">JeePlus</a> All rights reserved.
  */
-package com.jeeplus.modules.contact.mapper;
+package com.jeeplus.modules.contacts.mapper;
 
 import com.jeeplus.core.persistence.BaseMapper;
 import com.jeeplus.core.persistence.annotation.MyBatisMapper;
-import com.jeeplus.modules.contact.entity.Contact;
+import com.jeeplus.modules.contacts.entity.Contacts;
 
 /**
  * 客户联系人MAPPER接口
@@ -13,6 +13,6 @@ import com.jeeplus.modules.contact.entity.Contact;
  * @version 2019-05-10
  */
 @MyBatisMapper
-public interface ContactMapper extends BaseMapper<Contact> {
+public interface ContactsMapper extends BaseMapper<Contacts> {
 	
 }

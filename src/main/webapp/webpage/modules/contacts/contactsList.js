@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <script>
 $(document).ready(function() {
-	$('#contactTable').bootstrapTable({
+	$('#contactsTable').bootstrapTable({
 		 
 		  //请求方法
                method: 'post',
@@ -37,7 +37,7 @@ $(document).ready(function() {
                //可供选择的每页的行数（*）    
                pageList: [10, 25, 50, 100],
                //这个接口需要处理bootstrap table传递的固定参数,并返回特定格式的json数据  
-               url: "${ctx}/contact/contact/data",
+               url: "${ctx}/contacts/contacts/data",
                //默认值为 'limit',传给服务端的参数为：limit, offset, search, sort, order Else
                //queryParamsType:'',   
                ////查询参数,每次调用是会带上这个参数，可自定义                         
@@ -61,9 +61,9 @@ $(document).ready(function() {
                    } else if($el.data("item") == "delete"){
                         jp.confirm('确认要删除该客户联系人记录吗？', function(){
                        	jp.loading();
-                       	jp.get("${ctx}/contact/contact/delete?id="+row.id, function(data){
+                       	jp.get("${ctx}/contacts/contacts/delete?id="+row.id, function(data){
                    	  		if(data.success){
-                   	  			$('#contactTable').bootstrapTable('refresh');
+                   	  			$('#contactsTable').bootstrapTable('refresh');
                    	  			jp.success(data.msg);
                    	  		}else{
                    	  			jp.error(data.msg);
@@ -92,10 +92,10 @@ $(document).ready(function() {
 		        ,formatter:function(value, row , index){
 		        	value = jp.unescapeHTML(value);
 				   <c:choose>
-					   <c:when test="${fns:hasPermission('contact:contact:edit')}">
+					   <c:when test="${fns:hasPermission('contacts:contacts:edit')}">
 					      return "<a href='javascript:edit(\""+row.id+"\")'>"+value+"</a>";
 				      </c:when>
-					  <c:when test="${fns:hasPermission('contact:contact:view')}">
+					  <c:when test="${fns:hasPermission('contacts:contacts:view')}">
 					      return "<a href='javascript:view(\""+row.id+"\")'>"+value+"</a>";
 				      </c:when>
 					  <c:otherwise>
@@ -227,13 +227,13 @@ $(document).ready(function() {
 	  if(navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)){//如果是移动端
 
 		 
-		  $('#contactTable').bootstrapTable("toggleView");
+		  $('#contactsTable').bootstrapTable("toggleView");
 		}
 	  
-	  $('#contactTable').on('check.bs.table uncheck.bs.table load-success.bs.table ' +
+	  $('#contactsTable').on('check.bs.table uncheck.bs.table load-success.bs.table ' +
                 'check-all.bs.table uncheck-all.bs.table', function () {
-            $('#remove').prop('disabled', ! $('#contactTable').bootstrapTable('getSelections').length);
-            $('#view,#edit').prop('disabled', $('#contactTable').bootstrapTable('getSelections').length!=1);
+            $('#remove').prop('disabled', ! $('#contactsTable').bootstrapTable('getSelections').length);
+            $('#view,#edit').prop('disabled', $('#contactsTable').bootstrapTable('getSelections').length!=1);
         });
 		  
 		$("#btnImport").click(function(){
@@ -245,11 +245,11 @@ $(document).ready(function() {
 			    content: "${ctx}/tag/importExcel" ,
 			    btn: ['下载模板','确定', '关闭'],
 				    btn1: function(index, layero){
-					  jp.downloadFile('${ctx}/contact/contact/import/template');
+					  jp.downloadFile('${ctx}/contacts/contacts/import/template');
 				  },
 			    btn2: function(index, layero){
 				        var iframeWin = layero.find('iframe')[0]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
-						iframeWin.contentWindow.importExcel('${ctx}/contact/contact/import', function (data) {
+						iframeWin.contentWindow.importExcel('${ctx}/contacts/contacts/import', function (data) {
 							if(data.success){
 								jp.success(data.msg);
 								refresh();
@@ -272,8 +272,8 @@ $(document).ready(function() {
 	        var searchParam = $("#searchForm").serializeJSON();
 	        searchParam.pageNo = 1;
 	        searchParam.pageSize = -1;
-            var sortName = $('#contactTable').bootstrapTable("getOptions", "none").sortName;
-            var sortOrder = $('#contactTable').bootstrapTable("getOptions", "none").sortOrder;
+            var sortName = $('#contactsTable').bootstrapTable("getOptions", "none").sortName;
+            var sortOrder = $('#contactsTable').bootstrapTable("getOptions", "none").sortOrder;
             var values = "";
             for(var key in searchParam){
                 values = values + key + "=" + searchParam[key] + "&";
@@ -282,26 +282,26 @@ $(document).ready(function() {
                 values = values + "orderBy=" + sortName + " "+sortOrder;
             }
 
-			jp.downloadFile('${ctx}/contact/contact/export?'+values);
+			jp.downloadFile('${ctx}/contacts/contacts/export?'+values);
 	  })
 
 		    
 	  $("#search").click("click", function() {// 绑定查询按扭
-		  $('#contactTable').bootstrapTable('refresh');
+		  $('#contactsTable').bootstrapTable('refresh');
 		});
 	 
 	 $("#reset").click("click", function() {// 绑定查询按扭
 		  $("#searchForm  input").val("");
 		  $("#searchForm  select").val("");
 		  $("#searchForm  .select-item").html("");
-		  $('#contactTable').bootstrapTable('refresh');
+		  $('#contactsTable').bootstrapTable('refresh');
 		});
 		
 		
 	});
 		
   function getIdSelections() {
-        return $.map($("#contactTable").bootstrapTable('getSelections'), function (row) {
+        return $.map($("#contactsTable").bootstrapTable('getSelections'), function (row) {
             return row.id
         });
     }
@@ -310,9 +310,9 @@ $(document).ready(function() {
 
 		jp.confirm('确认要删除该客户联系人记录吗？', function(){
 			jp.loading();  	
-			jp.get("${ctx}/contact/contact/deleteAll?ids=" + getIdSelections(), function(data){
+			jp.get("${ctx}/contacts/contacts/deleteAll?ids=" + getIdSelections(), function(data){
          	  		if(data.success){
-         	  			$('#contactTable').bootstrapTable('refresh');
+         	  			$('#contactsTable').bootstrapTable('refresh');
          	  			jp.success(data.msg);
          	  		}else{
          	  			jp.error(data.msg);
@@ -324,11 +324,11 @@ $(document).ready(function() {
 
     //刷新列表
   function refresh(){
-  	$('#contactTable').bootstrapTable('refresh');
+  	$('#contactsTable').bootstrapTable('refresh');
   }
   
    function add(){
-	  jp.openSaveDialog('新增客户联系人', "${ctx}/contact/contact/form",'800px', '500px');
+	  jp.openSaveDialog('新增客户联系人', "${ctx}/contacts/contacts/form",'800px', '500px');
   }
 
 
@@ -337,14 +337,14 @@ $(document).ready(function() {
        if(id == undefined){
 	      id = getIdSelections();
 	}
-	jp.openSaveDialog('编辑客户联系人', "${ctx}/contact/contact/form?id=" + id, '800px', '500px');
+	jp.openSaveDialog('编辑客户联系人', "${ctx}/contacts/contacts/form?id=" + id, '800px', '500px');
   }
   
  function view(id){//没有权限时，不显示确定按钮
       if(id == undefined){
              id = getIdSelections();
       }
-        jp.openViewDialog('查看客户联系人', "${ctx}/contact/contact/form?id=" + id, '800px', '500px');
+        jp.openViewDialog('查看客户联系人', "${ctx}/contacts/contacts/form?id=" + id, '800px', '500px');
  }
 
 

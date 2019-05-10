@@ -15,7 +15,7 @@
                 return false;
 			}else{
                 jp.loading();
-                jp.post("${ctx}/contact/contact/save",$('#inputForm').serialize(),function(data){
+                jp.post("${ctx}/contacts/contacts/save",$('#inputForm').serialize(),function(data){
                     if(data.success){
                         jp.getParent().refresh();
                         var dialogIndex = parent.layer.getFrameIndex(window.name); // 获取窗口索引
@@ -32,7 +32,7 @@
 	</script>
 </head>
 <body class="bg-white">
-		<form:form id="inputForm" modelAttribute="contact" class="form-horizontal">
+		<form:form id="inputForm" modelAttribute="contacts" class="form-horizontal">
 		<form:hidden path="id"/>	
 		<table class="table table-bordered">
 		   <tbody>

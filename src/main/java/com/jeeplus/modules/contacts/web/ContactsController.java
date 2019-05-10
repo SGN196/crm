@@ -1,7 +1,7 @@
 /**
  * Copyright &copy; 2015-2020 <a href="http://www.jeeplus.org/">JeePlus</a> All rights reserved.
  */
-package com.jeeplus.modules.contact.web;
+package com.jeeplus.modules.contacts.web;
 
 import com.google.common.collect.Lists;
 import com.jeeplus.common.json.AjaxJson;
@@ -11,8 +11,8 @@ import com.jeeplus.common.utils.excel.ExportExcel;
 import com.jeeplus.common.utils.excel.ImportExcel;
 import com.jeeplus.core.persistence.Page;
 import com.jeeplus.core.web.BaseController;
-import com.jeeplus.modules.contact.entity.Contact;
-import com.jeeplus.modules.contact.service.ContactService;
+import com.jeeplus.modules.contacts.entity.Contacts;
+import com.jeeplus.modules.contacts.service.ContactsService;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,20 +36,20 @@ import java.util.Map;
  * @version 2019-05-10
  */
 @Controller
-@RequestMapping(value = "${adminPath}/contact/contact")
-public class ContactController extends BaseController {
+@RequestMapping(value = "${adminPath}/contacts/contacts")
+public class ContactsController extends BaseController {
 
 	@Autowired
-	private ContactService contactService;
+	private ContactsService contactsService;
 	
 	@ModelAttribute
-	public Contact get(@RequestParam(required=false) String id) {
-		Contact entity = null;
+	public Contacts get(@RequestParam(required=false) String id) {
+		Contacts entity = null;
 		if (StringUtils.isNotBlank(id)){
-			entity = contactService.get(id);
+			entity = contactsService.get(id);
 		}
 		if (entity == null){
-			entity = new Contact();
+			entity = new Contacts();
 		}
 		return entity;
 	}
@@ -57,53 +57,53 @@ public class ContactController extends BaseController {
 	/**
 	 * 客户联系人列表页面
 	 */
-	@RequiresPermissions("contact:contact:list")
+	@RequiresPermissions("contacts:contacts:list")
 	@RequestMapping(value = {"list", ""})
-	public String list(Contact contact, Model model) {
-		model.addAttribute("contact", contact);
-		return "modules/contact/contactList";
+	public String list(Contacts contacts, Model model) {
+		model.addAttribute("contacts", contacts);
+		return "modules/contacts/contactsList";
 	}
 	
 		/**
 	 * 客户联系人列表数据
 	 */
 	@ResponseBody
-	@RequiresPermissions("contact:contact:list")
+	@RequiresPermissions("contacts:contacts:list")
 	@RequestMapping(value = "data")
-	public Map<String, Object> data(Contact contact, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<Contact> page = contactService.findPage(new Page<Contact>(request, response), contact); 
+	public Map<String, Object> data(Contacts contacts, HttpServletRequest request, HttpServletResponse response, Model model) {
+		Page<Contacts> page = contactsService.findPage(new Page<Contacts>(request, response), contacts); 
 		return getBootstrapData(page);
 	}
 
 	/**
 	 * 查看，增加，编辑客户联系人表单页面
 	 */
-	@RequiresPermissions(value={"contact:contact:view","contact:contact:add","contact:contact:edit"},logical=Logical.OR)
+	@RequiresPermissions(value={"contacts:contacts:view","contacts:contacts:add","contacts:contacts:edit"},logical=Logical.OR)
 	@RequestMapping(value = "form")
-	public String form(Contact contact, Model model) {
-		model.addAttribute("contact", contact);
-		return "modules/contact/contactForm";
+	public String form(Contacts contacts, Model model) {
+		model.addAttribute("contacts", contacts);
+		return "modules/contacts/contactsForm";
 	}
 
 	/**
 	 * 保存客户联系人
 	 */
 	@ResponseBody
-	@RequiresPermissions(value={"contact:contact:add","contact:contact:edit"},logical=Logical.OR)
+	@RequiresPermissions(value={"contacts:contacts:add","contacts:contacts:edit"},logical=Logical.OR)
 	@RequestMapping(value = "save")
-	public AjaxJson save(Contact contact, Model model) throws Exception{
+	public AjaxJson save(Contacts contacts, Model model) throws Exception{
 		AjaxJson j = new AjaxJson();
 		/**
 		 * 后台hibernate-validation插件校验
 		 */
-		String errMsg = beanValidator(contact);
+		String errMsg = beanValidator(contacts);
 		if (StringUtils.isNotBlank(errMsg)){
 			j.setSuccess(false);
 			j.setMsg(errMsg);
 			return j;
 		}
 		//新增或编辑表单保存
-		contactService.save(contact);//保存
+		contactsService.save(contacts);//保存
 		j.setSuccess(true);
 		j.setMsg("保存客户联系人成功");
 		return j;
@@ -113,11 +113,11 @@ public class ContactController extends BaseController {
 	 * 删除客户联系人
 	 */
 	@ResponseBody
-	@RequiresPermissions("contact:contact:del")
+	@RequiresPermissions("contacts:contacts:del")
 	@RequestMapping(value = "delete")
-	public AjaxJson delete(Contact contact) {
+	public AjaxJson delete(Contacts contacts) {
 		AjaxJson j = new AjaxJson();
-		contactService.delete(contact);
+		contactsService.delete(contacts);
 		j.setMsg("删除客户联系人成功");
 		return j;
 	}
@@ -126,13 +126,13 @@ public class ContactController extends BaseController {
 	 * 批量删除客户联系人
 	 */
 	@ResponseBody
-	@RequiresPermissions("contact:contact:del")
+	@RequiresPermissions("contacts:contacts:del")
 	@RequestMapping(value = "deleteAll")
 	public AjaxJson deleteAll(String ids) {
 		AjaxJson j = new AjaxJson();
 		String idArray[] =ids.split(",");
 		for(String id : idArray){
-			contactService.delete(contactService.get(id));
+			contactsService.delete(contactsService.get(id));
 		}
 		j.setMsg("删除客户联系人成功");
 		return j;
@@ -142,14 +142,14 @@ public class ContactController extends BaseController {
 	 * 导出excel文件
 	 */
 	@ResponseBody
-	@RequiresPermissions("contact:contact:export")
+	@RequiresPermissions("contacts:contacts:export")
     @RequestMapping(value = "export")
-    public AjaxJson exportFile(Contact contact, HttpServletRequest request, HttpServletResponse response) {
+    public AjaxJson exportFile(Contacts contacts, HttpServletRequest request, HttpServletResponse response) {
 		AjaxJson j = new AjaxJson();
 		try {
             String fileName = "客户联系人"+DateUtils.getDate("yyyyMMddHHmmss")+".xlsx";
-            Page<Contact> page = contactService.findPage(new Page<Contact>(request, response, -1), contact);
-    		new ExportExcel("客户联系人", Contact.class).setDataList(page.getList()).write(response, fileName).dispose();
+            Page<Contacts> page = contactsService.findPage(new Page<Contacts>(request, response, -1), contacts);
+    		new ExportExcel("客户联系人", Contacts.class).setDataList(page.getList()).write(response, fileName).dispose();
     		j.setSuccess(true);
     		j.setMsg("导出成功！");
     		return j;
@@ -165,7 +165,7 @@ public class ContactController extends BaseController {
 
 	 */
 	@ResponseBody
-	@RequiresPermissions("contact:contact:import")
+	@RequiresPermissions("contacts:contacts:import")
     @RequestMapping(value = "import")
    	public AjaxJson importFile(@RequestParam("file")MultipartFile file, HttpServletResponse response, HttpServletRequest request) {
 		AjaxJson j = new AjaxJson();
@@ -174,10 +174,10 @@ public class ContactController extends BaseController {
 			int failureNum = 0;
 			StringBuilder failureMsg = new StringBuilder();
 			ImportExcel ei = new ImportExcel(file, 1, 0);
-			List<Contact> list = ei.getDataList(Contact.class);
-			for (Contact contact : list){
+			List<Contacts> list = ei.getDataList(Contacts.class);
+			for (Contacts contacts : list){
 				try{
-					contactService.save(contact);
+					contactsService.save(contacts);
 					successNum++;
 				}catch(ConstraintViolationException ex){
 					failureNum++;
@@ -200,14 +200,14 @@ public class ContactController extends BaseController {
 	 * 下载导入客户联系人数据模板
 	 */
 	@ResponseBody
-	@RequiresPermissions("contact:contact:import")
+	@RequiresPermissions("contacts:contacts:import")
     @RequestMapping(value = "import/template")
      public AjaxJson importFileTemplate(HttpServletResponse response) {
 		AjaxJson j = new AjaxJson();
 		try {
             String fileName = "客户联系人数据导入模板.xlsx";
-    		List<Contact> list = Lists.newArrayList(); 
-    		new ExportExcel("客户联系人数据", Contact.class, 1).setDataList(list).write(response, fileName).dispose();
+    		List<Contacts> list = Lists.newArrayList(); 
+    		new ExportExcel("客户联系人数据", Contacts.class, 1).setDataList(list).write(response, fileName).dispose();
     		return null;
 		} catch (Exception e) {
 			j.setSuccess(false);
