@@ -185,13 +185,6 @@ $(document).ready(function() {
 		       
 		    }
 			,{
-		        field: 'picture',
-		        title: '照片',
-		        sortable: true,
-		        sortName: 'picture'
-		       
-		    }
-			,{
 		        field: 'wxId',
 		        title: '微信Id',
 		        sortable: true,

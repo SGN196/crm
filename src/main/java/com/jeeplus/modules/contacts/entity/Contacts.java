@@ -3,10 +3,10 @@
  */
 package com.jeeplus.modules.contacts.entity;
 
-import javax.validation.constraints.NotNull;
-
-import com.jeeplus.core.persistence.DataEntity;
 import com.jeeplus.common.utils.excel.annotation.ExcelField;
+import com.jeeplus.core.persistence.DataEntity;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * 客户联系人Entity
@@ -27,7 +27,6 @@ public class Contacts extends DataEntity<Contacts> {
 	private String mobile;		// 手机号码
 	private String email;		// 邮件地址
 	private String qqNumber;		// QQ号码
-	private String picture;		// 照片
 	private String wxId;		// 微信Id
 	private String influence;		// 决策影响力
 	private String description;		// 性格描述
@@ -139,15 +138,6 @@ public class Contacts extends DataEntity<Contacts> {
 
 	public void setQqNumber(String qqNumber) {
 		this.qqNumber = qqNumber;
-	}
-	
-	@ExcelField(title="照片", align=2, sort=12)
-	public String getPicture() {
-		return picture;
-	}
-
-	public void setPicture(String picture) {
-		this.picture = picture;
 	}
 	
 	@ExcelField(title="微信Id", align=2, sort=13)

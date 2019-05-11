@@ -100,28 +100,24 @@
 					<td class="width-35">
 						<form:input path="qqNumber" htmlEscape="false"    class="form-control "/>
 					</td>
-					<td class="width-15 active"><label class="pull-right">照片：</label></td>
-					<td class="width-35">
-						<form:input path="picture" htmlEscape="false"    class="form-control "/>
-					</td>
-				</tr>
-				<tr>
 					<td class="width-15 active"><label class="pull-right">微信Id：</label></td>
 					<td class="width-35">
 						<form:input path="wxId" htmlEscape="false"    class="form-control "/>
 					</td>
+				</tr>
+				<tr>
 					<td class="width-15 active"><label class="pull-right">决策影响力：</label></td>
 					<td class="width-35">
 						<form:input path="influence" htmlEscape="false"    class="form-control "/>
 					</td>
-				</tr>
-				<tr>
 					<td class="width-15 active"><label class="pull-right">性格描述：</label></td>
 					<td class="width-35">
 						<form:input path="description" htmlEscape="false"    class="form-control "/>
 					</td>
+				</tr>
+				<tr>
 					<td class="width-15 active"><label class="pull-right">备注信息：</label></td>
-					<td class="width-35">
+					<td class="width-35" colspan="3">
 						<form:textarea path="remarks" htmlEscape="false" rows="4"    class="form-control "/>
 					</td>
 				</tr>
