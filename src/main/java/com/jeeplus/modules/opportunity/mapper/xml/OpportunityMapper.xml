@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.opportunity.mapper.OpportunityMapper">
+    
+	<sql id="opportunityColumns">
+		a.id AS "id",
+		a.f_oppno AS "oppNo",
+		a.f_oppname AS "oppName",
+		a.f_sourceid AS "sourceId",
+		a.f_custid AS "custId",
+		a.f_status AS "status",
+		a.f_orgid AS "orgId",
+		a.f_deptid AS "deptId",
+		a.f_empid AS "empId",
+		a.f_oppstageid AS "oppStageId",
+		a.f_budget AS "budget",
+		a.f_commit AS "commit",
+		a.f_demand AS "demand",
+		a.f_decisionmaker AS "decisionmaker",
+		a.f_plandate AS "planDate",
+		a.f_process AS "process",
+		a.f_factors AS "factors",
+		a.f_competitor AS "competitor",
+		a.f_lasttime AS "lastTime",
+		a.f_deaytimes AS "deayTimes",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="opportunityJoins">
+		
+	</sql>
+	
+    
+	<select id="get" resultType="Opportunity" >
+		SELECT 
+			<include refid="opportunityColumns"/>
+		FROM ic_opportunity a
+		<include refid="opportunityJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Opportunity" >
+		SELECT 
+			<include refid="opportunityColumns"/>
+		FROM ic_opportunity a
+		<include refid="opportunityJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+			<if test="oppName != null and oppName != ''">
+				AND a.f_oppname LIKE 
+					<if test="dbName == 'oracle'">'%'||#{oppName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{oppName}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{oppName},'%')</if>
+			</if>
+			<if test="custId != null and custId != ''">
+				AND a.f_custid = #{custId}
+			</if>
+			<if test="oppStageId != null and oppStageId != ''">
+				AND a.f_oppstageid = #{oppStageId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Opportunity" >
+		SELECT 
+			<include refid="opportunityColumns"/>
+		FROM ic_opportunity a
+		<include refid="opportunityJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO ic_opportunity(
+			id,
+			f_oppno,
+			f_oppname,
+			f_sourceid,
+			f_custid,
+			f_status,
+			f_orgid,
+			f_deptid,
+			f_empid,
+			f_oppstageid,
+			f_budget,
+			f_commit,
+			f_demand,
+			f_decisionmaker,
+			f_plandate,
+			f_process,
+			f_factors,
+			f_competitor,
+			f_lasttime,
+			f_deaytimes,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{oppNo},
+			#{oppName},
+			#{sourceId},
+			#{custId},
+			#{status},
+			#{orgId},
+			#{deptId},
+			#{empId},
+			#{oppStageId},
+			#{budget},
+			#{commit},
+			#{demand},
+			#{decisionmaker},
+			#{planDate},
+			#{process},
+			#{factors},
+			#{competitor},
+			#{lastTime},
+			#{deayTimes},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE ic_opportunity SET 	
+			f_oppno = #{oppNo},
+			f_oppname = #{oppName},
+			f_sourceid = #{sourceId},
+			f_custid = #{custId},
+			f_status = #{status},
+			f_orgid = #{orgId},
+			f_deptid = #{deptId},
+			f_empid = #{empId},
+			f_oppstageid = #{oppStageId},
+			f_budget = #{budget},
+			f_commit = #{commit},
+			f_demand = #{demand},
+			f_decisionmaker = #{decisionmaker},
+			f_plandate = #{planDate},
+			f_process = #{process},
+			f_factors = #{factors},
+			f_competitor = #{competitor},
+			f_lasttime = #{lastTime},
+			f_deaytimes = #{deayTimes},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM ic_opportunity
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE ic_opportunity SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="Opportunity" statementType="STATEMENT">
+		select * FROM ic_opportunity  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>
