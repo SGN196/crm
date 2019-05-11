@@ -148,6 +148,10 @@
 							<td class="width-35">
 								<form:input path="contactId" htmlEscape="false"    class="form-control required"/>
 							</td>
+							<td class="width-15 active"><label class="pull-right">联系电话：</label></td>
+							<td class="width-35">
+								<form:input path="contactId" htmlEscape="false"    class="form-control required"/>
+							</td>
 						</tr>
 						<tr>
 							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>省份Id：</label></td>
