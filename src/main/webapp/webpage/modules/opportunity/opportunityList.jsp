@@ -84,6 +84,11 @@
                 <button id="follow-up-record" class="btn btn-default" disabled onclick="followUpRecord()">
                     <i class="fa fa-list-alt"></i> 跟进记录
                 </button>
+                <shiro:hasPermission name="opportunity:opportunity:list">
+                    <button id="openSearch" class="btn btn-default" onclick="search()">
+                        <i class="glyphicon glyphicon-search"></i> 搜索
+                    </button>
+                </shiro:hasPermission>
             </div>
 
             <!-- 表格 -->
@@ -105,5 +110,8 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" charset="UTF-8">
+    <%@include file="../../../static/common/js/search.js" %>
+</script>
 </body>
 </html>
