@@ -13,6 +13,8 @@ import com.jeeplus.core.persistence.Page;
 import com.jeeplus.core.web.BaseController;
 import com.jeeplus.modules.customer.entity.Customer;
 import com.jeeplus.modules.customer.service.CustomerService;
+import com.jeeplus.modules.sys.entity.User;
+import com.jeeplus.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +29,10 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * 客户档案Controller
@@ -41,7 +45,7 @@ public class CustomerController extends BaseController {
 
 	@Autowired
 	private CustomerService customerService;
-	
+
 	@ModelAttribute
 	public Customer get(@RequestParam(required=false) String id) {
 		Customer entity = null;
@@ -80,7 +84,24 @@ public class CustomerController extends BaseController {
 	 */
 	@RequiresPermissions(value={"customer:customer:view","customer:customer:add","customer:customer:edit"},logical=Logical.OR)
 	@RequestMapping(value = "form")
-	public String form(Customer customer, Model model) {
+	public String form(Customer customer, Model model, HttpServletRequest request) {
+		String id = request.getParameter("id");
+		if (id == null || id == "") {
+			model.addAttribute("checked", true);
+			Calendar cale = Calendar.getInstance();
+			int year = cale.get(Calendar.YEAR);
+			int month = cale.get(Calendar.MONTH) + 1;
+			int day = cale.get(Calendar.DAY_OF_MONTH);
+			Random random = new Random();
+			int twoPlace = random.nextInt(99);
+			String two = String.format("%02d", twoPlace);
+			int threePlace = random.nextInt(999);
+			String three = String.format("%02d", threePlace);
+			customer.setNumber("CUS" + year + "-" + month + "-" + day + "-" + two + "-" + three);
+			User currentUser = UserUtils.getUser();
+			customer.setOrgId(currentUser.getCompany().getId());
+			customer.setEmpId(currentUser.getId());
+		}
 		model.addAttribute("customer", customer);
 		return "modules/customer/customerForm";
 	}

@@ -72,40 +72,50 @@
 							</td>
 							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>客户代码：</label></td>
 							<td class="width-35">
-								<form:input path="number" htmlEscape="false"    class="form-control required"/>
+								<form:input path="number" htmlEscape="false"  readonly="true"  class="form-control required"/>
 							</td>
 						</tr>
 						<tr>
-							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>所属公司Id：</label></td>
+							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>所属公司：</label></td>
 							<td class="width-35">
-								<form:input path="orgId" htmlEscape="false"    class="form-control required"/>
+								<form:input path="orgId" htmlEscape="false"  readonly="true"  class="form-control required"/>
 							</td>
-							<td class="width-15 active"><label class="pull-right">业务员Id：</label></td>
+							<td class="width-15 active"><label class="pull-right">销售人员：</label></td>
 							<td class="width-35">
-								<form:input path="empId" htmlEscape="false"    class="form-control "/>
-							</td>
-						</tr>
-						<tr>
-							<td class="width-15 active"><label class="pull-right">使用状态：</label></td>
-							<td class="width-35">
-								<form:input path="state" htmlEscape="false"    class="form-control "/>
-							</td>
-							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>客户来源Id：</label></td>
-							<td class="width-35">
-								<form:input path="sourceId" htmlEscape="false"    class="form-control required"/>
+								<form:input path="empId" htmlEscape="false"  readonly="true"  class="form-control "/>
 							</td>
 						</tr>
 						<tr>
-							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>跟进状态Id：</label></td>
+							<td class="width-15 active"><label class="pull-right">资料状态：</label></td>
+							<td class="width-35">
+								<%--<form:input path="state" htmlEscape="false"    class="form-control "/>--%>
+								<form:radiobutton path="state" value="1" class="i-checks " checked="${checked}"/>使用
+								<form:radiobutton path="state" value="0" class="i-checks "/>停用
+							</td>
+							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>客户来源：</label></td>
+							<td class="width-35">
+								<%--<form:input path="sourceId" htmlEscape="false"    class="form-control required"/>--%>
+								<form:select path="sourceId" class="form-control required">
+									<form:option value="" label=""/>
+									<form:options items="${fns:getDictList('customer_source')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+								</form:select>
+							</td>
+						</tr>
+						<tr>
+							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>跟进状态：</label></td>
 							<td class="width-35">
 								<form:select path="statusId" class="form-control required">
 									<form:option value="" label=""/>
-									<form:options items="${fns:getDictList('')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+									<form:options items="${fns:getDictList('follow_up_state')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 								</form:select>
 							</td>
-							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>区域Id：</label></td>
+							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>所属区域：</label></td>
 							<td class="width-35">
-								<form:input path="areaId" htmlEscape="false"    class="form-control required"/>
+								<%--<form:input path="areaId" htmlEscape="false"    class="form-control required"/>--%>
+								<form:select path="areaId" class="form-control required">
+									<form:option value="" label=""/>
+									<form:options items="${fns:getDictList('respective_region')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+								</form:select>
 							</td>
 						</tr>
 						<tr>
@@ -134,17 +144,17 @@
 					<table class="table table-bordered">
 						<tbody>
 						<tr>
-							<td class="width-15 active"><label class="pull-right">客户法人：</label></td>
+							<td class="width-15 active"><label class="pull-right">企业法人：</label></td>
 							<td class="width-35">
 								<form:input path="legalPerson" htmlEscape="false"    class="form-control "/>
 							</td>
-							<td class="width-15 active"><label class="pull-right">曾用名：</label></td>
+							<td class="width-15 active"><label class="pull-right">企业曾用名：</label></td>
 							<td class="width-35">
 								<form:input path="usedName" htmlEscape="false"    class="form-control "/>
 							</td>
 						</tr>
 						<tr>
-							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>主联系人Id：</label></td>
+							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>主联系人：</label></td>
 							<td class="width-35">
 								<form:input path="contactId" htmlEscape="false"    class="form-control required"/>
 							</td>
@@ -154,21 +164,21 @@
 							</td>
 						</tr>
 						<tr>
-							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>省份Id：</label></td>
+							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>省份：</label></td>
 							<td class="width-35">
 								<form:input path="provincelId" htmlEscape="false"    class="form-control required"/>
 							</td>
-							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>城市Id：</label></td>
+							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>城市：</label></td>
 							<td class="width-35">
 								<form:input path="cityId" htmlEscape="false"    class="form-control required"/>
 							</td>
 						</tr>
 						<tr>
-							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>区县Id：</label></td>
+							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>区县：</label></td>
 							<td class="width-35">
 								<form:input path="countryId" htmlEscape="false"    class="form-control required"/>
 							</td>
-							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>镇街Id：</label></td>
+							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>镇街：</label></td>
 							<td class="width-35">
 								<form:input path="streetId" htmlEscape="false"    class="form-control required"/>
 							</td>
@@ -184,11 +194,11 @@
 							</td>
 						</tr>
 						<tr>
-							<td class="width-15 active"><label class="pull-right">简称：</label></td>
+							<td class="width-15 active"><label class="pull-right">客户简称：</label></td>
 							<td class="width-35">
 								<form:input path="shortName" htmlEscape="false"    class="form-control "/>
 							</td>
-							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>行业Id：</label></td>
+							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>所属行业：</label></td>
 							<td class="width-35">
 								<form:select path="industoryId" class="form-control required">
 									<form:option value="" label=""/>
@@ -210,7 +220,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td class="width-15 active"><label class="pull-right">传真：</label></td>
+							<td class="width-15 active"><label class="pull-right">传真号码：</label></td>
 							<td class="width-35">
 								<form:input path="fax" htmlEscape="false"    class="form-control "/>
 							</td>
@@ -220,7 +230,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>企业性质Id：</label></td>
+							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>企业性质：</label></td>
 							<td class="width-35">
 								<form:input path="propertyId" htmlEscape="false"    class="form-control required"/>
 							</td>
