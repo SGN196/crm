@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.oppactivities.mapper.OppActivitiesMapper">
+    
+	<sql id="oppActivitiesColumns">
+		a.id AS "id",
+		a.f_oppid AS "oppId",
+		a.f_acttypeid AS "actTypeID",
+		a.f_order AS "order",
+		a.f_contactid AS "contactID",
+		a.f_date AS "date",
+		a.f_detail AS "detail",
+		a.f_empid AS "empID",
+		a.f_billdate AS "billDate",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="oppActivitiesJoins">
+		
+	</sql>
+	
+    
+	<select id="get" resultType="OppActivities" >
+		SELECT 
+			<include refid="oppActivitiesColumns"/>
+		FROM ic_oppactivities a
+		<include refid="oppActivitiesJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="OppActivities" >
+		SELECT 
+			<include refid="oppActivitiesColumns"/>
+		FROM ic_oppactivities a
+		<include refid="oppActivitiesJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+			<if test="actTypeID != null and actTypeID != ''">
+				AND a.f_acttypeid = #{actTypeID}
+			</if>
+			<if test="contactID != null and contactID != ''">
+				AND a.f_contactid = #{contactID}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="OppActivities" >
+		SELECT 
+			<include refid="oppActivitiesColumns"/>
+		FROM ic_oppactivities a
+		<include refid="oppActivitiesJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO ic_oppactivities(
+			id,
+			f_oppid,
+			f_acttypeid,
+			f_order,
+			f_contactid,
+			f_date,
+			f_detail,
+			f_empid,
+			f_billdate,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{oppId},
+			#{actTypeID},
+			#{order},
+			#{contactID},
+			#{date},
+			#{detail},
+			#{empID},
+			#{billDate},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE ic_oppactivities SET 	
+			f_oppid = #{oppId},
+			f_acttypeid = #{actTypeID},
+			f_order = #{order},
+			f_contactid = #{contactID},
+			f_date = #{date},
+			f_detail = #{detail},
+			f_empid = #{empID},
+			f_billdate = #{billDate},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM ic_oppactivities
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE ic_oppactivities SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="OppActivities" statementType="STATEMENT">
+		select * FROM ic_oppactivities  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>

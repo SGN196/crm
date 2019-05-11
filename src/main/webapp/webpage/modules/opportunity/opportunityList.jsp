@@ -78,12 +78,16 @@
                 <button id="delay" class="btn btn-info" disabled onclick="delay()">
                     <i class="fa fa-clock-o"></i> 延时申请
                 </button>
-                <button id="follow-up" class="btn btn-mini" disabled onclick="follow_up()">
-                    <i class="glyphicon glyphicon-phone-alt"></i> 跟进
-                </button>
-                <button id="follow-up-record" class="btn btn-default" disabled onclick="followUpRecord()">
-                    <i class="fa fa-list-alt"></i> 跟进记录
-                </button>
+                <shiro:hasPermission name="oppactivities:oppActivities:add">
+                    <button id="follow-up" class="btn btn-mini" disabled onclick="follow_up()">
+                        <i class="glyphicon glyphicon-phone-alt"></i> 跟进
+                    </button>
+                </shiro:hasPermission>
+                <shiro:hasPermission name="oppactivities:oppActivities:list">
+                    <button id="follow-up-record" class="btn btn-default" disabled onclick="followUpRecord()">
+                        <i class="fa fa-list-alt"></i> 跟进记录
+                    </button>
+                </shiro:hasPermission>
                 <shiro:hasPermission name="opportunity:opportunity:list">
                     <button id="openSearch" class="btn btn-default" onclick="search()">
                         <i class="glyphicon glyphicon-search"></i> 搜索
