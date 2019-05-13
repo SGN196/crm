@@ -370,13 +370,13 @@ function follow_up(id) {
     if(id == undefined){
         id = getIdSelections();
     }
-    jp.openSaveDialog('商机跟进', "${ctx}/oppactivities/oppactivities/form",'800px', '500px');
+    jp.openSaveDialog('商机跟进', "${ctx}/oppactivities/oppActivities/form?oppId="+id,'800px', '500px');
 }
 function followUpRecord(id) {
     if(id == undefined){
         id = getIdSelections();
     }
-    jp.openViewDialog('商机跟进记录列表', "${ctx}/oppactivities/oppActivities/list?id=" + id,'1200px', '600px');
+    jp.openViewDialog('商机跟进记录列表', "${ctx}/oppactivities/oppActivities/list?oppId=" + id,'1200px', '600px');
 }
 
 </script>

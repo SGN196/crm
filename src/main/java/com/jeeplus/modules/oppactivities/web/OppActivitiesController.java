@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
 
+import com.jeeplus.modules.opportunity.entity.Opportunity;
+import com.jeeplus.modules.opportunity.service.OpportunityService;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,9 @@ public class OppActivitiesController extends BaseController {
 
 	@Autowired
 	private OppActivitiesService oppActivitiesService;
+
+	@Autowired
+	private OpportunityService opportunityService;
 	
 	@ModelAttribute
 	public OppActivities get(@RequestParam(required=false) String id) {
@@ -85,9 +90,23 @@ public class OppActivitiesController extends BaseController {
 	@RequiresPermissions(value={"oppactivities:oppActivities:view","oppactivities:oppActivities:add","oppactivities:oppActivities:edit"},logical=Logical.OR)
 	@RequestMapping(value = "form")
 	public String form(OppActivities oppActivities, Model model) {
+		Opportunity opportunity=opportunityService.get(oppActivities.getOppId());
 		model.addAttribute("oppActivities", oppActivities);
+		model.addAttribute("opportunity", opportunity);
 		return "modules/oppactivities/oppActivitiesForm";
 	}
+
+	/**
+	 *
+	 * @return
+	 */
+	/*
+	@RequiresPermissions(value={"oppactivities:oppActivities:add"},logical=Logical.OR)
+	@RequestMapping(value = "oppForm")
+	public String oppByIdForm(){
+
+		return "";
+	}*/
 
 	/**
 	 * 保存商机跟进

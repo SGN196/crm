@@ -47,6 +47,7 @@
 			<if test="contactID != null and contactID != ''">
 				AND a.f_contactid = #{contactID}
 			</if>
+			AND a.f_oppId = #{oppId}
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
