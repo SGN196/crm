@@ -13,8 +13,6 @@ import com.jeeplus.core.persistence.Page;
 import com.jeeplus.core.web.BaseController;
 import com.jeeplus.modules.customer.entity.Customer;
 import com.jeeplus.modules.customer.service.CustomerService;
-import com.jeeplus.modules.sys.entity.User;
-import com.jeeplus.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,9 +96,6 @@ public class CustomerController extends BaseController {
 			int threePlace = random.nextInt(999);
 			String three = String.format("%02d", threePlace);
 			customer.setNumber("CUS" + year + "-" + month + "-" + day + "-" + two + "-" + three);
-			User currentUser = UserUtils.getUser();
-			customer.setOrgId(currentUser.getCompany().getId());
-			customer.setEmpId(currentUser.getId());
 		}
 		model.addAttribute("customer", customer);
 		return "modules/customer/customerForm";
