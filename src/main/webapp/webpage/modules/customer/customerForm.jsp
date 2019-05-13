@@ -82,7 +82,8 @@
 							</td>
 							<td class="width-15 active"><label class="pull-right">销售人员：</label></td>
 							<td class="width-35">
-								<form:input path="empId" htmlEscape="false"  readonly="true"  class="form-control "/>
+								<%--<form:input path="empId" htmlEscape="false"    class="form-control "/>--%>
+								<input type="text" id="empId" name="empId" htmlEscape="false"    class="form-control " style="background: url(${ctxStatic}/common/images/user.png) no-repeat; background-position: left; background-size: 25px 25px; cursor: pointer; padding-left: 25px;"/>
 							</td>
 						</tr>
 						<tr>
