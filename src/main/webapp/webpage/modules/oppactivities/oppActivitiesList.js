@@ -1,15 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <script>
 $(document).ready(function() {
-	$('#opportunityTable').bootstrapTable({
-		 
+	$('#oppActivitiesTable').bootstrapTable({
 		  //请求方法
                method: 'post',
                //类型json
                dataType: "json",
                contentType: "application/x-www-form-urlencoded",
                //显示检索按钮
-	           showSearch: true,
+	           showSearch: false,
                //显示刷新按钮
                showRefresh: true,
                //显示切换手机试图按钮
@@ -37,7 +36,7 @@ $(document).ready(function() {
                //可供选择的每页的行数（*）    
                pageList: [10, 25, 50, 100],
                //这个接口需要处理bootstrap table传递的固定参数,并返回特定格式的json数据  
-               url: "${ctx}/opportunity/opportunity/data",
+               url: "${ctx}/oppactivities/oppActivities/data",
                //默认值为 'limit',传给服务端的参数为：limit, offset, search, sort, order Else
                //queryParamsType:'',   
                ////查询参数,每次调用是会带上这个参数，可自定义                         
@@ -59,11 +58,11 @@ $(document).ready(function() {
                    }else if($el.data("item") == "view"){
                        view(row.id);
                    } else if($el.data("item") == "delete"){
-                        jp.confirm('确认要删除该线索商机记录吗？', function(){
+                        jp.confirm('确认要删除该商机跟进记录吗？', function(){
                        	jp.loading();
-                       	jp.get("${ctx}/opportunity/opportunity/delete?id="+row.id, function(data){
+                       	jp.get("${ctx}/oppactivities/oppActivities/delete?id="+row.id, function(data){
                    	  		if(data.success){
-                   	  			$('#opportunityTable').bootstrapTable('refresh');
+                   	  			$('#oppActivitiesTable').bootstrapTable('refresh');
                    	  			jp.success(data.msg);
                    	  		}else{
                    	  			jp.error(data.msg);
@@ -85,17 +84,17 @@ $(document).ready(function() {
 		       
 		    }
 			,{
-		        field: 'oppNo',
+		        field: 'oppId',
 		        title: '商机编号',
 		        sortable: true,
-		        sortName: 'oppNo'
+		        sortName: 'oppId'
 		        ,formatter:function(value, row , index){
 		        	value = jp.unescapeHTML(value);
 				   <c:choose>
-					   <c:when test="${fns:hasPermission('opportunity:opportunity:edit')}">
+					   <c:when test="${fns:hasPermission('oppactivities:oppActivities:edit')}">
 					      return "<a href='javascript:edit(\""+row.id+"\")'>"+value+"</a>";
 				      </c:when>
-					  <c:when test="${fns:hasPermission('opportunity:opportunity:view')}">
+					  <c:when test="${fns:hasPermission('oppactivities:oppActivities:view')}">
 					      return "<a href='javascript:view(\""+row.id+"\")'>"+value+"</a>";
 				      </c:when>
 					  <c:otherwise>
@@ -106,129 +105,65 @@ $(document).ready(function() {
 		       
 		    }
 			,{
-		        field: 'oppName',
-		        title: '商机名称',
+		        field: 'actTypeID',
+		        title: '活动类型',
 		        sortable: true,
-		        sortName: 'oppName'
+		        sortName: 'actTypeID',
+		        formatter:function(value, row , index){
+		        	return jp.getDictLabel(${fns:toJson(fns:getDictList(''))}, value, "-");
+		        }
 		       
 		    }
 			,{
-		        field: 'sourceId',
-		        title: '商机来源编号',
+		        field: 'order',
+		        title: '排序序号',
 		        sortable: true,
-		        sortName: 'sourceId'
+		        sortName: 'order'
 		       
 		    }
 			,{
-		        field: 'custId',
-		        title: '客户编号',
+		        field: 'contactID',
+		        title: '联系人编号',
 		        sortable: true,
-		        sortName: 'custId'
+		        sortName: 'contactID',
+		        formatter:function(value, row , index){
+		        	return jp.getDictLabel(${fns:toJson(fns:getDictList(''))}, value, "-");
+		        }
 		       
 		    }
 			,{
-		        field: 'status',
-		        title: '商机状态',
+		        field: 'date',
+		        title: '跟进时间',
 		        sortable: true,
-		        sortName: 'status'
+		        sortName: 'date'
 		       
 		    }
 			,{
-		        field: 'orgId',
-		        title: '所属公司编号',
+		        field: 'detail',
+		        title: '跟进内容',
 		        sortable: true,
-		        sortName: 'orgId'
+		        sortName: 'detail'
 		       
 		    }
 			,{
-		        field: 'deptId',
-		        title: '所属部门编号',
+		        field: 'empID',
+		        title: '跟进人编号',
 		        sortable: true,
-		        sortName: 'deptId'
+		        sortName: 'empID'
 		       
 		    }
 			,{
-		        field: 'empId',
-		        title: '跟进人员编号',
+		        field: 'billDate',
+		        title: '记录时间',
 		        sortable: true,
-		        sortName: 'empId'
+		        sortName: 'billDate'
 		       
 		    }
 			,{
-		        field: 'oppStageId',
-		        title: '商机阶段编号',
+		        field: 'remarks',
+		        title: '备注信息',
 		        sortable: true,
-		        sortName: 'oppStageId'
-		       
-		    }
-			,{
-		        field: 'budget',
-		        title: '资金预算',
-		        sortable: true,
-		        sortName: 'budget'
-		       
-		    }
-			,{
-		        field: 'commit',
-		        title: '是否立项',
-		        sortable: true,
-		        sortName: 'commit'
-		       
-		    }
-			,{
-		        field: 'demand',
-		        title: '需求描述',
-		        sortable: true,
-		        sortName: 'demand'
-		       
-		    }
-			,{
-		        field: 'decisionmaker',
-		        title: '决策人',
-		        sortable: true,
-		        sortName: 'decisionmaker'
-		       
-		    }
-			,{
-		        field: 'planDate',
-		        title: '预计成交日期',
-		        sortable: true,
-		        sortName: 'planDate'
-		       
-		    }
-			,{
-		        field: 'process',
-		        title: '决策流程',
-		        sortable: true,
-		        sortName: 'process'
-		       
-		    }
-			,{
-		        field: 'factors',
-		        title: '决策因素',
-		        sortable: true,
-		        sortName: 'factors'
-		       
-		    }
-			,{
-		        field: 'competitor',
-		        title: '竞争对手',
-		        sortable: true,
-		        sortName: 'competitor'
-		       
-		    }
-			,{
-		        field: 'lastTime',
-		        title: '上次跟进时间',
-		        sortable: true,
-		        sortName: 'lastTime'
-		       
-		    }
-			,{
-		        field: 'deayTimes',
-		        title: '累计延时申请次数',
-		        sortable: true,
-		        sortName: 'deayTimes'
+		        sortName: 'remarks'
 		       
 		    }
 		     ]
@@ -239,13 +174,13 @@ $(document).ready(function() {
 	  if(navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)){//如果是移动端
 
 		 
-		  $('#opportunityTable').bootstrapTable("toggleView");
+		  $('#oppActivitiesTable').bootstrapTable("toggleView");
 		}
 	  
-	  $('#opportunityTable').on('check.bs.table uncheck.bs.table load-success.bs.table ' +
+	  $('#oppActivitiesTable').on('check.bs.table uncheck.bs.table load-success.bs.table ' +
                 'check-all.bs.table uncheck-all.bs.table', function () {
-            $('#remove').prop('disabled', ! $('#opportunityTable').bootstrapTable('getSelections').length);
-            $('#view,#edit,#delay,#follow-up,#follow-up-record').prop('disabled', $('#opportunityTable').bootstrapTable('getSelections').length!=1);
+            $('#remove').prop('disabled', ! $('#oppActivitiesTable').bootstrapTable('getSelections').length);
+            $('#view,#edit').prop('disabled', $('#oppActivitiesTable').bootstrapTable('getSelections').length!=1);
         });
 		  
 		$("#btnImport").click(function(){
@@ -257,11 +192,11 @@ $(document).ready(function() {
 			    content: "${ctx}/tag/importExcel" ,
 			    btn: ['下载模板','确定', '关闭'],
 				    btn1: function(index, layero){
-					  jp.downloadFile('${ctx}/opportunity/opportunity/import/template');
+					  jp.downloadFile('${ctx}/oppactivities/oppActivities/import/template');
 				  },
 			    btn2: function(index, layero){
 				        var iframeWin = layero.find('iframe')[0]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
-						iframeWin.contentWindow.importExcel('${ctx}/opportunity/opportunity/import', function (data) {
+						iframeWin.contentWindow.importExcel('${ctx}/oppactivities/oppActivities/import', function (data) {
 							if(data.success){
 								jp.success(data.msg);
 								refresh();
@@ -284,8 +219,8 @@ $(document).ready(function() {
 	        var searchParam = $("#searchForm").serializeJSON();
 	        searchParam.pageNo = 1;
 	        searchParam.pageSize = -1;
-            var sortName = $('#opportunityTable').bootstrapTable("getOptions", "none").sortName;
-            var sortOrder = $('#opportunityTable').bootstrapTable("getOptions", "none").sortOrder;
+            var sortName = $('#oppActivitiesTable').bootstrapTable("getOptions", "none").sortName;
+            var sortOrder = $('#oppActivitiesTable').bootstrapTable("getOptions", "none").sortOrder;
             var values = "";
             for(var key in searchParam){
                 values = values + key + "=" + searchParam[key] + "&";
@@ -294,37 +229,37 @@ $(document).ready(function() {
                 values = values + "orderBy=" + sortName + " "+sortOrder;
             }
 
-			jp.downloadFile('${ctx}/opportunity/opportunity/export?'+values);
+			jp.downloadFile('${ctx}/oppactivities/oppActivities/export?'+values);
 	  })
 
 		    
 	  $("#search").click("click", function() {// 绑定查询按扭
-		  $('#opportunityTable').bootstrapTable('refresh');
+		  $('#oppActivitiesTable').bootstrapTable('refresh');
 		});
 	 
 	 $("#reset").click("click", function() {// 绑定查询按扭
 		  $("#searchForm  input").val("");
 		  $("#searchForm  select").val("");
 		  $("#searchForm  .select-item").html("");
-		  $('#opportunityTable').bootstrapTable('refresh');
+		  $('#oppActivitiesTable').bootstrapTable('refresh');
 		});
 		
 		
 	});
 		
   function getIdSelections() {
-        return $.map($("#opportunityTable").bootstrapTable('getSelections'), function (row) {
+        return $.map($("#oppActivitiesTable").bootstrapTable('getSelections'), function (row) {
             return row.id
         });
     }
   
   function deleteAll(){
 
-		jp.confirm('确认要删除该线索商机记录吗？', function(){
+		jp.confirm('确认要删除该商机跟进记录吗？', function(){
 			jp.loading();  	
-			jp.get("${ctx}/opportunity/opportunity/deleteAll?ids=" + getIdSelections(), function(data){
+			jp.get("${ctx}/oppactivities/oppActivities/deleteAll?ids=" + getIdSelections(), function(data){
          	  		if(data.success){
-         	  			$('#opportunityTable').bootstrapTable('refresh');
+         	  			$('#oppActivitiesTable').bootstrapTable('refresh');
          	  			jp.success(data.msg);
          	  		}else{
          	  			jp.error(data.msg);
@@ -336,11 +271,11 @@ $(document).ready(function() {
 
     //刷新列表
   function refresh(){
-  	$('#opportunityTable').bootstrapTable('refresh');
+  	$('#oppActivitiesTable').bootstrapTable('refresh');
   }
   
    function add(){
-	  jp.openSaveDialog('新增线索商机', "${ctx}/opportunity/opportunity/form",'1000px', '700px');
+	  jp.openSaveDialog('新增商机跟进', "${ctx}/oppactivities/oppActivities/form",'800px', '500px');
   }
 
 
@@ -349,34 +284,16 @@ $(document).ready(function() {
        if(id == undefined){
 	      id = getIdSelections();
 	}
-	jp.openSaveDialog('编辑线索商机', "${ctx}/opportunity/opportunity/form?id=" + id, '1000px', '700px');
+	jp.openSaveDialog('编辑商机跟进', "${ctx}/oppactivities/oppActivities/form?id=" + id, '800px', '500px');
   }
   
  function view(id){//没有权限时，不显示确定按钮
       if(id == undefined){
              id = getIdSelections();
       }
-        jp.openViewDialog('查看线索商机', "${ctx}/opportunity/opportunity/form?id=" + id,'1000px', '700px');
+        jp.openViewDialog('查看商机跟进', "${ctx}/oppactivities/oppActivities/form?id=" + id, '800px', '500px');
  }
-//延时申请
-function delay(id) {
-    if(id == undefined){
-        id = getIdSelections();
-    }
-    jp.alert("待开发中");
-}
- //跟进
-function follow_up(id) {
-    if(id == undefined){
-        id = getIdSelections();
-    }
-    jp.openSaveDialog('商机跟进', "${ctx}/oppactivities/oppactivities/form",'800px', '500px');
-}
-function followUpRecord(id) {
-    if(id == undefined){
-        id = getIdSelections();
-    }
-    jp.openViewDialog('商机跟进记录列表', "${ctx}/oppactivities/oppActivities/list?id=" + id,'1200px', '600px');
-}
+
+
 
 </script>
