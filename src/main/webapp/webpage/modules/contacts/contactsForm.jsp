@@ -7,7 +7,12 @@
 	<script type="text/javascript">
 
 		$(document).ready(function() {
-
+			if (${id == null || id == ''}) {
+				if ($("input[name='gender']").val() == '1') {
+					$("input[name='gender']").attr("checked", "checked");
+					// alert($("input[name='gender']").val());
+				}
+			}
 		});
 		function save() {
             var isValidate = jp.validateForm('#inputForm');//校验表单
@@ -53,7 +58,7 @@
 					</td>
 					<td class="width-15 active"><label class="pull-right"><font color="red">*</font>性别：</label></td>
 					<td class="width-35">
-						<form:radiobuttons path="gender" items="${fns:getDictList('sex')}" itemLabel="label" itemValue="value" htmlEscape="false" class="i-checks required" checked="${checked}"/>
+						<form:radiobuttons path="gender" items="${fns:getDictList('sex')}" itemLabel="label" itemValue="value" htmlEscape="false" class="i-checks required"/>
 					</td>
 				</tr>
 				<tr>

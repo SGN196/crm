@@ -80,7 +80,12 @@ public class ContactsController extends BaseController {
 	 */
 	@RequiresPermissions(value={"contacts:contacts:view","contacts:contacts:add","contacts:contacts:edit"},logical=Logical.OR)
 	@RequestMapping(value = "form")
-	public String form(Contacts contacts, Model model) {
+	public String form(Contacts contacts, Model model, HttpServletRequest request) {
+		String id = request.getParameter("id");
+		if (id == null || id == "") {
+			model.addAttribute("checked", true);
+		}
+		model.addAttribute("id", id);
 		model.addAttribute("contacts", contacts);
 		return "modules/contacts/contactsForm";
 	}
