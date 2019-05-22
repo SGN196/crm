@@ -85,6 +85,20 @@ $(document).ready(function() {
 		       
 		    }
 			,{
+                       title: '序号',
+                       field: '',
+                       align:'center',
+                       formatter: function (value, row, index) {
+                           return index+1;
+                       }
+                   },{
+                       field: 'customer.name',
+                       title: '客户名称',
+                       sortable: true,
+                       sortName: 'customer.name'
+
+                   },
+				   {
 		        field: 'oppNo',
 		        title: '商机编号',
 		        sortable: true,
@@ -111,68 +125,61 @@ $(document).ready(function() {
 		        sortable: true,
 		        sortName: 'oppName'
 		       
-		    }
+		    },{
+                       field: 'oppStageId',
+                       title: '商机阶段',
+                       sortable: true,
+                       sortName: 'oppStageId',
+					   formatter:function(value, row , index){
+                       return jp.getDictLabel(${fns:toJson(fns:getDictList('business_opportunity_stage'))}, value, "-");
+					}
+
+             }
+             ,{
+                       field: 'company.name',
+                       title: '所属公司',
+                       sortable: true,
+                       sortName: 'company.name'
+
+            },{
+                       field: 'office.name',
+                       title: '所属部门',
+                       sortable: true,
+                       sortName: 'office.name'
+
+             }
+              ,{
+                       field: 'empId',
+                       title: '跟进人员',
+                       sortable: true,
+                       sortName: 'empId'
+
+              },{
+                       field: 'lastTime',
+                       title: '上次跟进时间',
+                       sortable: true,
+                       sortName: 'lastTime'
+
+              }
 			,{
 		        field: 'sourceId',
-		        title: '商机来源编号',
+		        title: '商机来源',
 		        sortable: true,
-		        sortName: 'sourceId'
-		       
-		    }
-			,{
-		        field: 'custId',
-		        title: '客户编号',
-		        sortable: true,
-		        sortName: 'custId'
+		        sortName: 'sourceId',
+				formatter:function(value, row , index){
+					return jp.getDictLabel(${fns:toJson(fns:getDictList('customer_source'))}, value, "-");
+				}
+
 		       
 		    }
 			,{
 		        field: 'status',
 		        title: '商机状态',
 		        sortable: true,
-		        sortName: 'status'
-		       
-		    }
-			,{
-		        field: 'orgId',
-		        title: '所属公司编号',
-		        sortable: true,
-		        sortName: 'orgId'
-		       
-		    }
-			,{
-		        field: 'deptId',
-		        title: '所属部门编号',
-		        sortable: true,
-		        sortName: 'deptId'
-		       
-		    }
-			,{
-		        field: 'empId',
-		        title: '跟进人员编号',
-		        sortable: true,
-		        sortName: 'empId'
-		       
-		    }
-			,{
-		        field: 'oppStageId',
-		        title: '商机阶段编号',
-		        sortable: true,
-		        sortName: 'oppStageId'
-		       
-		    }
-			,{
-		        field: 'budget',
-		        title: '资金预算',
-		        sortable: true,
-		        sortName: 'budget'
-		       
-		    }
-			,{
-		        field: 'commit',
-		        title: '是否立项',
-		        sortable: true,
-		        sortName: 'commit'
+		        sortName: 'status',
+                 formatter:function(value, row , index){
+                           return jp.getDictLabel(${fns:toJson(fns:getDictList('business_opportunity_state'))}, value, "-");
+                 }
 		       
 		    }
 			,{
@@ -180,56 +187,7 @@ $(document).ready(function() {
 		        title: '需求描述',
 		        sortable: true,
 		        sortName: 'demand'
-		       
-		    }
-			,{
-		        field: 'decisionmaker',
-		        title: '决策人',
-		        sortable: true,
-		        sortName: 'decisionmaker'
-		       
-		    }
-			,{
-		        field: 'planDate',
-		        title: '预计成交日期',
-		        sortable: true,
-		        sortName: 'planDate'
-		       
-		    }
-			,{
-		        field: 'process',
-		        title: '决策流程',
-		        sortable: true,
-		        sortName: 'process'
-		       
-		    }
-			,{
-		        field: 'factors',
-		        title: '决策因素',
-		        sortable: true,
-		        sortName: 'factors'
-		       
-		    }
-			,{
-		        field: 'competitor',
-		        title: '竞争对手',
-		        sortable: true,
-		        sortName: 'competitor'
-		       
-		    }
-			,{
-		        field: 'lastTime',
-		        title: '上次跟进时间',
-		        sortable: true,
-		        sortName: 'lastTime'
-		       
-		    }
-			,{
-		        field: 'deayTimes',
-		        title: '累计延时申请次数',
-		        sortable: true,
-		        sortName: 'deayTimes'
-		       
+
 		    }
 		     ]
 		

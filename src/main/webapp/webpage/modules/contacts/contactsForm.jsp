@@ -42,16 +42,10 @@
 		<table class="table table-bordered">
 		   <tbody>
 				<tr>
-					<td class="width-15 active"><label class="pull-right"><font color="red">*</font>所属客户：</label></td>
-					<td class="width-35">
-						<form:input path="cusId" htmlEscape="false"    class="form-control required"/>
-					</td>
-					<td class="width-15 active"><label class="pull-right"><font color="red">*</font>所属业务员：</label></td>
+					<%--<td class="width-15 active"><label class="pull-right"><font color="red">*</font>所属业务员：</label></td>
 					<td class="width-35">
 						<form:input path="name" htmlEscape="false"    class="form-control required"/>
-					</td>
-				</tr>
-				<tr>
+					</td>--%>
 					<td class="width-15 active"><label class="pull-right"><font color="red">*</font>姓名：</label></td>
 					<td class="width-35">
 						<form:input path="name" htmlEscape="false"    class="form-control required"/>
@@ -62,24 +56,46 @@
 					</td>
 				</tr>
 				<tr>
+
+					<td class="width-15 active"><label class="pull-right">所属客户：</label></td><%--<font color="red">*</font>--%>
+					<td class="width-35">
+							<marketing:customerSelect id="tcusId" name="customer.id" value="${contacts.customer.id}" labelName="customer.name" labelValue="${contacts.customer.name}"
+                                                      fieldLabels="客户名称|客户法人|跟进状态" fieldKeys="name|legalPerson|statusId" searchLabels="客户名称|客户法人|跟进状态"
+                                                      searchKeys="name|legalPerson|statusId" title="选择所属公司" url="${ctx}/customer/customer/data" cssClass="form-control "/>
+						<%--<marketing:customerSelect id="tcusId" name="cusId" value="${contacts.cusId}" labelName="customer.id" labelValue="${contacts.cusId}"
+												  fieldLabels="客户名称|客户法人|跟进状态" fieldKeys="name|legalPerson|statusId" searchLabels="客户名称|客户法人|跟进状态" searchKeys="name|legalPerson|statusId" title="选择所属公司" url="${ctx}/customer/customer/data" cssClass="form-control "/>--%>
+
+					</td>
+					<td class="width-15 active"><label class="pull-right">身份证号码：</label></td>
+					<td class="width-35">
+						<form:input path="cardId" htmlEscape="false" class="form-control "/>
+					</td>
+				</tr>
+				<tr>
 					<td class="width-15 active"><label class="pull-right"><font color="red">*</font>状态：</label></td>
 					<td class="width-35">
 						<form:radiobutton path="state" value="1" class="i-checks " checked="${checked}"/>使用
 						<form:radiobutton path="state" value="0" class="i-checks "/>停用
 					</td>
-					<td class="width-15 active"><label class="pull-right">身份证号码：</label></td>
+					<td class="width-15 active"><label class="pull-right">手机号码：</label></td>
 					<td class="width-35">
-						<form:input path="cardId" htmlEscape="false"    class="form-control "/>
+						<form:input path="mobile" htmlEscape="false"    class="form-control "/>
 					</td>
 				</tr>
 				<tr>
 					<td class="width-15 active"><label class="pull-right">部门：</label></td>
 					<td class="width-35">
-						<form:input path="department" htmlEscape="false"    class="form-control "/>
+						<form:select path="department" class="form-control required">
+							<form:option value="" label=""/>
+							<form:options items="${fns:getDictList('sys_office_common')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+						</form:select>
 					</td>
 					<td class="width-15 active"><label class="pull-right">职务：</label></td>
 					<td class="width-35">
-						<form:input path="title" htmlEscape="false"    class="form-control "/>
+						<form:select path="title" class="form-control required">
+							<form:option value="" label=""/>
+							<form:options items="${fns:getDictList('office_duties')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+						</form:select>
 					</td>
 				</tr>
 				<tr>
@@ -87,9 +103,9 @@
 					<td class="width-35">
 						<form:input path="officePhone" htmlEscape="false"    class="form-control "/>
 					</td>
-					<td class="width-15 active"><label class="pull-right">手机号码：</label></td>
+					<td class="width-15 active"><label class="pull-right">微信号：</label></td>
 					<td class="width-35">
-						<form:input path="mobile" htmlEscape="false"    class="form-control "/>
+						<form:input path="wxId" htmlEscape="false"    class="form-control "/>
 					</td>
 				</tr>
 				<tr>
@@ -103,18 +119,12 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="width-15 active"><label class="pull-right">微信号：</label></td>
-					<td class="width-35">
-						<form:input path="wxId" htmlEscape="false"    class="form-control "/>
-					</td>
 					<td class="width-15 active"><label class="pull-right">决策影响力：</label></td>
 					<td class="width-35">
 						<form:input path="influence" htmlEscape="false"    class="form-control "/>
 					</td>
-				</tr>
-				<tr>
 					<td class="width-15 active"><label class="pull-right">性格描述：</label></td>
-					<td class="width-35" colspan="3">
+					<td class="width-35">
 						<form:input path="description" htmlEscape="false"    class="form-control "/>
 					</td>
 				</tr>

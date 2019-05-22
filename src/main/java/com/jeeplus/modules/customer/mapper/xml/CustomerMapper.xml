@@ -6,7 +6,7 @@
 		a.id AS "id",
 		a.f_erpcusid AS "erpcusId",
 		a.f_orgid AS "orgId",
-		a.f_deptid AS "deptId",
+		a.f_deptid AS "office.id",
 		a.f_empid AS "empId",
 		a.f_number AS "number",
 		a.f_name AS "name",
@@ -16,7 +16,7 @@
 		a.f_statusid AS "statusId",
 		a.f_areaid AS "areaId",
 		a.f_address AS "address",
-		a.f_contactid AS "contactId",
+		a.f_contactid AS "contacts.id",
 		a.f_provincelid AS "provincelId",
 		a.f_cityid AS "cityId",
 		a.f_countryid AS "countryId",
@@ -62,11 +62,18 @@
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
-		a.del_flag AS "delFlag"
+		a.del_flag AS "delFlag",
+
+		contacts.f_name AS "contacts.name",
+		contacts.f_mobile AS "contacts.mobile",
+		office.name AS "office.name",
+		createBy.name AS "createBy.name"
 	</sql>
 	
 	<sql id="customerJoins">
-		
+		LEFT JOIN tb_contacts contacts ON contacts.id = a.f_contactid
+		LEFT JOIN  sys_office office ON office.id=a.f_deptid
+		LEFT JOIN  sys_user createBy ON createBy.id=a.create_by
 	</sql>
 	
     
@@ -209,7 +216,7 @@
 			#{id},
 			#{erpcusId},
 			#{orgId},
-			#{deptId},
+			#{office.id},
 			#{empId},
 			#{number},
 			#{name},
@@ -219,7 +226,7 @@
 			#{statusId},
 			#{areaId},
 			#{address},
-			#{contactId},
+			#{contacts.id},
 			#{provincelId},
 			#{cityId},
 			#{countryId},
@@ -273,7 +280,7 @@
 		UPDATE tb_customer SET 	
 			f_erpcusid = #{erpcusId},
 			f_orgid = #{orgId},
-			f_deptid = #{deptId},
+			f_deptid = #{office.id},
 			f_empid = #{empId},
 			f_number = #{number},
 			f_name = #{name},
@@ -283,7 +290,7 @@
 			f_statusid = #{statusId},
 			f_areaid = #{areaId},
 			f_address = #{address},
-			f_contactid = #{contactId},
+			f_contactid = #{contacts.id},
 			f_provincelid = #{provincelId},
 			f_cityid = #{cityId},
 			f_countryid = #{countryId},

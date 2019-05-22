@@ -3,8 +3,10 @@
  */
 package com.jeeplus.modules.opportunity.web;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -84,7 +86,19 @@ public class OpportunityController extends BaseController {
 	 */
 	@RequiresPermissions(value={"opportunity:opportunity:view","opportunity:opportunity:add","opportunity:opportunity:edit"},logical=Logical.OR)
 	@RequestMapping(value = "form")
-	public String form(Opportunity opportunity, Model model) {
+	public String form(Opportunity opportunity, Model model,HttpServletRequest request) {
+		String id = request.getParameter("id");
+		if (id == null || id == "") {
+			model.addAttribute("checked", true);
+			Calendar cale = Calendar.getInstance();
+			int year = cale.get(Calendar.YEAR);
+			int month = cale.get(Calendar.MONTH) + 1;
+			int day = cale.get(Calendar.DAY_OF_MONTH);
+			Random random = new Random();
+			int twoPlace = random.nextInt(99);
+			String two = String.format("%02d", twoPlace);
+			opportunity.setOppNo("BUS" + year + "-" + month + "-" + day + "-" + two);
+		}
 		model.addAttribute("opportunity", opportunity);
 		return "modules/opportunity/opportunityForm";
 	}

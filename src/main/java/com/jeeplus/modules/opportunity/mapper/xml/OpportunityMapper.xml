@@ -7,10 +7,10 @@
 		a.f_oppno AS "oppNo",
 		a.f_oppname AS "oppName",
 		a.f_sourceid AS "sourceId",
-		a.f_custid AS "custId",
+		a.f_custid AS "customer.id",
 		a.f_status AS "status",
-		a.f_orgid AS "orgId",
-		a.f_deptid AS "deptId",
+		a.f_orgid AS "company.id",
+		a.f_deptid AS "office.id",
 		a.f_empid AS "empId",
 		a.f_oppstageid AS "oppStageId",
 		a.f_budget AS "budget",
@@ -28,11 +28,21 @@
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
-		a.del_flag AS "delFlag"
+		a.del_flag AS "delFlag",
+		customer.f_name AS "customer.name",
+		office.name AS "office.name",
+		company.name AS "company.name",
+		updateBy.name AS "updateBy.name",
+		createBy.name AS "createBy.name"
+
 	</sql>
 	
 	<sql id="opportunityJoins">
-		
+		LEFT JOIN tb_customer customer ON customer.id = a.f_custid/*客户*/
+		LEFT JOIN sys_office office ON office.id = a.f_deptid/*部门*/
+		LEFT JOIN sys_office company ON company.id = a.f_orgid/*公司*/
+		LEFT JOIN sys_user updateBy ON updateBy.id = a.update_by/*更新者*/
+		LEFT JOIN sys_user createBy ON createBy.id = a.create_by/*创建者*/
 	</sql>
 	
     
@@ -127,10 +137,10 @@
 			#{oppNo},
 			#{oppName},
 			#{sourceId},
-			#{custId},
+			#{customer.id},
 			#{status},
-			#{orgId},
-			#{deptId},
+			#{company.id},
+			#{office.id},
 			#{empId},
 			#{oppStageId},
 			#{budget},
@@ -157,10 +167,10 @@
 			f_oppno = #{oppNo},
 			f_oppname = #{oppName},
 			f_sourceid = #{sourceId},
-			f_custid = #{custId},
+			f_custid = #{customer.id},
 			f_status = #{status},
-			f_orgid = #{orgId},
-			f_deptid = #{deptId},
+			f_orgid = #{company.id},
+			f_deptid = #{office.id},
 			f_empid = #{empId},
 			f_oppstageid = #{oppStageId},
 			f_budget = #{budget},

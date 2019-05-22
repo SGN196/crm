@@ -27,7 +27,7 @@ $(document).ready(function() {
                //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）     
                cache: false,    
                //是否显示分页（*）  
-               pagination: true,   
+               pagination: true,
                 //排序方式 
                sortOrder: "asc",  
                //初始化加载第一页，默认第一页
@@ -83,89 +83,118 @@ $(document).ready(function() {
                columns: [{
 		        checkbox: true
 		       
-		    }
+		    },
+			{
+                title: '序号',
+                field: '',
+                align:'center',
+                formatter: function (value, row, index) {
+                    return index+1;
+                }
+            },
+			{
+                       field: 'name',
+                       title: '客户名称',
+                       sortable: true,
+						align:'center',
+                       sortName: 'name'
+                       ,formatter:function(value, row , index){
+                           value = jp.unescapeHTML(value);
+                       <c:choose>
+                           <c:when test="${fns:hasPermission('customer:customer:edit')}">
+                           return "<a href='javascript:edit(\""+row.id+"\")'>"+value+"</a>";
+                       </c:when>
+                           <c:when test="${fns:hasPermission('customer:customer:view')}">
+                           return "<a href='javascript:view(\""+row.id+"\")'>"+value+"</a>";
+                       </c:when>
+                           <c:otherwise>
+                           return value;
+                       </c:otherwise>
+                           </c:choose>
+                       }
+
+                   }
+                   ,{
+                       field: 'industoryId',
+                       title: '行业',
+                       align:'center',
+                       sortable: true,
+                       sortName: 'industoryId',
+                       formatter:function(value, row , index){
+                           return jp.getDictLabel(${fns:toJson(fns:getDictList('sys_industry'))}, value, "-");
+                       }
+
+                   },
+                   {
+                       field: 'cusLevel',
+                       title: '客户等级',
+                       align:'center',
+                       sortable: true,
+                       sortName: 'cusLevel',
+                       formatter:function(value, row , index){
+                           return jp.getDictLabel(${fns:toJson(fns:getDictList('customer_level'))}, value, "-");
+                       }
+
+                   }
+
 			,{
 		        field: 'orgId',
-		        title: '所属公司Id',
+		        title: '所属公司',
+                align:'center',
 		        sortable: true,
 		        sortName: 'orgId'
 		       
 		    }
 			,{
-		        field: 'deptId',
-		        title: '所属部门Id',
+		        field: 'office.name',//deptId
+		        title: '所属部门',
+                align:'center',
 		        sortable: true,
-		        sortName: 'deptId'
+		        sortName: 'office.name'
 		       
 		    }
 			,{
 		        field: 'empId',
-		        title: '业务员Id',
+		        title: '销售员',
+                align:'center',
 		        sortable: true,
 		        sortName: 'empId'
 		       
 		    }
 			,{
-		        field: 'name',
-		        title: '客户名称',
+		        field: 'statusId',
+		        title: '跟进状态',
+				align:'center',
 		        sortable: true,
-		        sortName: 'name'
-				,formatter:function(value, row , index){
-				   value = jp.unescapeHTML(value);
-				<c:choose>
-				   <c:when test="${fns:hasPermission('customer:customer:edit')}">
-				   return "<a href='javascript:edit(\""+row.id+"\")'>"+value+"</a>";
-				</c:when>
-				   <c:when test="${fns:hasPermission('customer:customer:view')}">
-				   return "<a href='javascript:view(\""+row.id+"\")'>"+value+"</a>";
-				</c:when>
-				   <c:otherwise>
-				   return value;
-				</c:otherwise>
-				   </c:choose>
-				}
+		        sortName: 'statusId',
+		        formatter:function(value, row , index){
+		        	return jp.getDictLabel(${fns:toJson(fns:getDictList('follow_up_state'))}, value, "-");
+		        }
 		       
 		    }
 			,{
 		        field: 'sourceId',
-		        title: '客户来源Id',
+		        title: '客户来源',
 		        sortable: true,
-		        sortName: 'sourceId'
-		       
-		    }
-			,{
-		        field: 'statusId',
-		        title: '跟进状态Id',
-		        sortable: true,
-		        sortName: 'statusId',
+                align:'center',
+		        sortName: 'sourceId',
 		        formatter:function(value, row , index){
-		        	return jp.getDictLabel(${fns:toJson(fns:getDictList(''))}, value, "-");
+		        	return jp.getDictLabel(${fns:toJson(fns:getDictList('customer_source'))}, value, "-");
 		        }
 		       
 		    }
 			,{
-		        field: 'industoryId',
-		        title: '行业Id',
+		        field: '',
+		        title: '上次跟进',
 		        sortable: true,
-		        sortName: 'industoryId',
-		        formatter:function(value, row , index){
-		        	return jp.getDictLabel(${fns:toJson(fns:getDictList(''))}, value, "-");
-		        }
-		       
-		    }
-			,{
-		        field: 'cusLevel',
-		        title: '客户等级',
-		        sortable: true,
-		        sortName: 'cusLevel',
-		        formatter:function(value, row , index){
-		        	return jp.getDictLabel(${fns:toJson(fns:getDictList(''))}, value, "-");
-		        }
-		       
+                align:'center',
+		        sortName: '',
+
 		    }
 			,{
 		        field: 'remarks',
 		        title: '备注信息',
+                align:'center',
 		        sortable: true,
 		        sortName: 'remarks'
 		       
@@ -279,7 +308,7 @@ $(document).ready(function() {
   }
   
    function add(){
-	  jp.openSaveDialog('新增客户档案', "${ctx}/customer/customer/form",'800px', '500px');
+	  jp.openSaveDialog('新增客户档案', "${ctx}/customer/customer/form", '800px', '500px');
   }
 
 

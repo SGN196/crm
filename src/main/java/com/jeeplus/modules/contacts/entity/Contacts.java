@@ -5,6 +5,7 @@ package com.jeeplus.modules.contacts.entity;
 
 import com.jeeplus.common.utils.excel.annotation.ExcelField;
 import com.jeeplus.core.persistence.DataEntity;
+import com.jeeplus.modules.customer.entity.Customer;
 
 import javax.validation.constraints.NotNull;
 
@@ -30,6 +31,7 @@ public class Contacts extends DataEntity<Contacts> {
 	private String wxId;		// 微信Id
 	private String influence;		// 决策影响力
 	private String description;		// 性格描述
+	private Customer customer;		// 所客户
 	
 	public Contacts() {
 		super();
@@ -165,6 +167,15 @@ public class Contacts extends DataEntity<Contacts> {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	@ExcelField(title="所属客户", fieldType=Customer.class, value="customer.name", align=2, sort=16)
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 	
 }

@@ -5,6 +5,9 @@ package com.jeeplus.modules.customer.entity;
 
 import com.jeeplus.common.utils.excel.annotation.ExcelField;
 import com.jeeplus.core.persistence.DataEntity;
+import com.jeeplus.modules.contacts.entity.Contacts;
+import com.jeeplus.modules.sys.entity.Office;
+import com.jeeplus.modules.sys.entity.User;
 
 import javax.validation.constraints.NotNull;
 
@@ -69,6 +72,9 @@ public class Customer extends DataEntity<Customer> {
 	private Integer appearancePatentNum;		// 外观专利数量
 	private Integer trademarkNum;		// 商标版权数量
 	private Integer practicalPatentNum;		// 实用型专利数量
+	private Contacts contacts;//联系人
+	private Office office;//所属部门
+	private String area;		// 归属区域
 	
 	public Customer() {
 		super();
@@ -554,6 +560,25 @@ public class Customer extends DataEntity<Customer> {
 
 	public void setPracticalPatentNum(Integer practicalPatentNum) {
 		this.practicalPatentNum = practicalPatentNum;
+	}
+
+	@ExcelField(title="联系人", fieldType=Contacts.class, value="contacts.name", align=2, sort=54)
+	public Contacts getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(Contacts contacts) {
+		this.contacts = contacts;
+	}
+
+	/*@NotNull(message="归属部门不能为空")*/
+	@ExcelField(title="归属部门", fieldType=Office.class, value="office.name", align=2, sort=55)
+	public Office getOffice() {
+		return office;
+	}
+
+	public void setOffice(Office office) {
+		this.office = office;
 	}
 	
 }

@@ -9,6 +9,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import com.jeeplus.core.persistence.DataEntity;
 import com.jeeplus.common.utils.excel.annotation.ExcelField;
+import com.jeeplus.modules.customer.entity.Customer;
+import com.jeeplus.modules.sys.entity.Office;
 
 /**
  * 线索商机管理列表Entity
@@ -37,6 +39,10 @@ public class Opportunity extends DataEntity<Opportunity> {
 	private String competitor;	 // 竞争对手
 	private Date lastTime;		 // 上次跟进时间
 	private Integer deayTimes;	 // 累计延时申请次数
+	private Customer customer;//客户
+	private Office company;	// 归属公司
+	private Office office;	// 归属部门
+
 	
 	public Opportunity() {
 		super();
@@ -220,6 +226,34 @@ public class Opportunity extends DataEntity<Opportunity> {
 
 	public void setDeayTimes(Integer deayTimes) {
 		this.deayTimes = deayTimes;
+	}
+
+	@ExcelField(title="所属客户", fieldType=Customer.class, value="customer.name", align=2, sort=20)
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	@NotNull(message="归属公司不能为空")
+	@ExcelField(title="归属公司", align=2, sort=21)
+	public Office getCompany() {
+		return company;
+	}
+
+	public void setCompany(Office company) {
+		this.company = company;
+	}
+
+	@NotNull(message="归属部门不能为空")
+	@ExcelField(title="归属部门", align=2, sort=22)
+	public Office getOffice() {
+		return office;
+	}
+	public void setOffice(Office office) {
+		this.office = office;
 	}
 	
 }

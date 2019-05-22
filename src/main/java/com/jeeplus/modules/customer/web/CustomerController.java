@@ -11,6 +11,8 @@ import com.jeeplus.common.utils.excel.ExportExcel;
 import com.jeeplus.common.utils.excel.ImportExcel;
 import com.jeeplus.core.persistence.Page;
 import com.jeeplus.core.web.BaseController;
+import com.jeeplus.modules.contacts.entity.Contacts;
+import com.jeeplus.modules.contacts.service.ContactsService;
 import com.jeeplus.modules.customer.entity.Customer;
 import com.jeeplus.modules.customer.service.CustomerService;
 import org.apache.shiro.authz.annotation.Logical;
@@ -44,6 +46,8 @@ public class CustomerController extends BaseController {
 	@Autowired
 	private CustomerService customerService;
 
+	@Autowired
+	private ContactsService contactsService;
 	@ModelAttribute
 	public Customer get(@RequestParam(required=false) String id) {
 		Customer entity = null;
@@ -97,6 +101,11 @@ public class CustomerController extends BaseController {
 			String three = String.format("%02d", threePlace);
 			customer.setNumber("CUS" + year + "-" + month + "-" + day + "-" + two + "-" + three);
 		}
+		Contacts contacts =new Contacts();
+		contacts.setCustomer(customer);
+		List<Contacts>  findList = contactsService.findList(contacts);
+		System.out.println(findList);
+		model.addAttribute("findList", findList);
 		model.addAttribute("customer", customer);
 		return "modules/customer/customerForm";
 	}

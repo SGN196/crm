@@ -5,6 +5,7 @@ package com.jeeplus.core.persistence;
 
 import java.util.Date;
 
+import com.jeeplus.common.utils.excel.annotation.ExcelField;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Length;
 
@@ -81,7 +82,7 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
-	
+
 	public User getCreateBy() {
 		return createBy;
 	}
@@ -98,6 +99,7 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
+
 
 	public User getUpdateBy() {
 		return updateBy;

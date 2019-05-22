@@ -50,21 +50,22 @@
 					<td class="width-35">
 						<form:select path="actTypeID" class="form-control required">
 							<form:option value="" label=""/>
-							<form:options items="${fns:getDictList('')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+							<form:options items="${fns:getDictList('activity_type')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 						</form:select>
 					</td>
 				</tr>
 				<tr>
 					<td class="width-15 active"><label class="pull-right">排序序号：</label></td>
 					<td class="width-35">
-						<form:input path="order" htmlEscape="false"    class="form-control  isIntGteZero"/>
+						<form:input path="order" htmlEscape="false"    class="form-control isIntGteZero"/>
 					</td>
 					<td class="width-15 active"><label class="pull-right"><font color="red">*</font>联系人编号：</label></td>
 					<td class="width-35">
-						<form:select path="contactID" class="form-control required">
+						<form:input path="contactID" htmlEscape="false"    class="form-control"/>
+						<%--<form:select path="contactID" class="form-control required">
 							<form:option value="" label=""/>
 							<form:options items="${fns:getDictList('')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
-						</form:select>
+						</form:select>--%>
 					</td>
 				</tr>
 				<tr>

@@ -4,7 +4,7 @@
     
 	<sql id="contactsColumns">
 		a.id AS "id",
-		a.f_cusid AS "cusId",
+		a.f_cusid AS "customer.id",
 		a.f_name AS "name",
 		a.f_gender AS "gender",
 		a.f_state AS "state",
@@ -23,11 +23,13 @@
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
-		a.del_flag AS "delFlag"
+		a.del_flag AS "delFlag",
+
+	    customer.f_name AS "customer.name"
 	</sql>
 	
 	<sql id="contactsJoins">
-		
+		LEFT JOIN tb_customer customer ON customer.id = a.f_cusid
 	</sql>
 	
     
@@ -61,6 +63,11 @@
 			</if>
 			<if test="title != null and title != ''">
 				AND a.f_title = #{title}
+			</if>
+			<if test="customer!= null and customer!= ''">
+				<if test="customer.id != null and customer.id != ''">
+					AND a.f_cusid = #{customer.id}
+				</if>
 			</if>
 		</where>
 		<choose>
@@ -117,7 +124,7 @@
 			del_flag
 		) VALUES (
 			#{id},
-			#{cusId},
+			#{customer.id},
 			#{name},
 			#{gender},
 			#{state},
@@ -142,7 +149,7 @@
 	
 	<update id="update">
 		UPDATE tb_contacts SET 	
-			f_cusid = #{cusId},
+			f_cusid = #{customer.id},
 			f_name = #{name},
 			f_gender = #{gender},
 			f_state = #{state},

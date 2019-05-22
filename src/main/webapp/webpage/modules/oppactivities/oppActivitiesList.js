@@ -187,7 +187,7 @@ function initData() {
                 sortable: true,
                 sortName: 'actTypeID',
                 formatter:function(value, row , index){
-                    return jp.getDictLabel(${fns:toJson(fns:getDictList(''))}, value, "-");
+                    return jp.getDictLabel(${fns:toJson(fns:getDictList('activity_type'))}, value, "-");
                 }
 
             }
@@ -202,11 +202,7 @@ function initData() {
                 field: 'contactID',
                 title: '联系人',
                 sortable: true,
-                sortName: 'contactID',
-                formatter:function(value, row , index){
-                    return jp.getDictLabel(${fns:toJson(fns:getDictList(''))}, value, "-");
-                }
-
+                sortName: 'contactID'
             }
             ,{
                 field: 'date',

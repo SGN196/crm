@@ -5,12 +5,16 @@
 	<title>客户档案管理</title>
 	<meta name="decorator" content="ani"/>
 	<script type="text/javascript">
-
 		$(document).ready(function() {
 			$('#collapseOne').collapse('show');
 			$('#collapseTwo').collapse('show');
 			$('#collapseThree').collapse('show');
 			$('#collapseFour').collapse('show');
+            $('#createDate').datetimepicker({
+                format: "YYYY-MM-DD HH:mm:ss"
+            });
+
+
 		});
 
 		function move(val) {
@@ -46,6 +50,16 @@
 
         }
 	</script>
+	<script type="text/javascript">
+        $(function () {
+            $("#tcontactId").change(function(){
+
+				var mobile= $(this).find('option:selected').attr('mobile');
+				$("input[name='mobile']").val(mobile);
+            });
+        });
+
+	</script>
 </head>
 <body class="bg-white">
 <form:form id="inputForm" modelAttribute="customer" class="form-horizontal">
@@ -78,12 +92,12 @@
 						<tr>
 							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>所属公司：</label></td>
 							<td class="width-35">
-								<form:input path="orgId" htmlEscape="false"  readonly="true"  class="form-control required"/>
+								<form:input path="orgId" htmlEscape="false"  class="form-control required"/><%--readonly="true"--%>
 							</td>
 							<td class="width-15 active"><label class="pull-right">销售人员：</label></td>
 							<td class="width-35">
 								<%--<form:input path="empId" htmlEscape="false"    class="form-control "/>--%>
-								<input type="text" id="empId" name="empId" htmlEscape="false"    class="form-control " style="background: url(${ctxStatic}/common/images/user.png) no-repeat; background-position: left; background-size: 25px 25px; cursor: pointer; padding-left: 25px;"/>
+                                <form:input  path="empId" id="empId" name="empId" htmlEscape="false" class="form-control " style="background: url(${ctxStatic}/common/images/user.png) no-repeat; background-position: left; background-size: 25px 25px; cursor: pointer; padding-left: 25px;"/>
 							</td>
 						</tr>
 						<tr>
@@ -121,10 +135,38 @@
 						</tr>
 						<tr>
 							<td class="width-15 active"><label class="pull-right">客户地址：</label></td>
-							<td class="width-35" colspan="3">
+							<td class="width-35" >
 								<form:input path="address" htmlEscape="false"    class="form-control "/>
 							</td>
+							<td class="width-15 active"><label class="pull-right">归属部门：</label></td>
+							<td class="width-35">
+								<sys:treeselect id="office" name="office.id" value="${customer.office.id}" labelName="office.name" labelValue="${customer.office.name}"
+												title="部门" url="/sys/office/treeData?type=2" cssClass="form-control required" allowClear="true" notAllowSelectParent="true"/>
+							</td>
 						</tr>
+
+
+						<c:if test="${customer.createBy.id!=null&& customer.createBy.id!=''}">
+							<tr>
+								<td class="width-15 active"><label class="pull-right">创建人：</label></td>
+								<td class="width-35">
+									<input type="text" value="${customer.createBy.name}" htmlEscape="false" class="form-control " readonly="true"/>
+									<form:input path="createBy.id" type="hidden" htmlEscape="false" class="form-control " readonly="true"/>
+								</td>
+								<td class="width-15 active"><label class="pull-right">创建时间：</label></td>
+								<td class="width-35">
+									<fmt:formatDate value="${customer.createDate}" pattern="yyyy-MM-dd HH:mm:ss" var="time"/>
+									<input value="${time}" htmlEscape="false" class="form-control " readonly="true"/>
+										<%--<div class='input-group form_datetime' id='createDate'>
+                                            <input type='text'  name="createDate" class="form-control required"  value="<fmt:formatDate value="${传.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"/>
+                                            <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                        </div>--%>
+								</td>
+							</tr>
+						</c:if>
+
 						</tbody>
 					</table>
 				</div>
@@ -143,7 +185,7 @@
 			<div id="collapseTwo" class="panel-collapse collapse in">
 				<div class="panel-body">
 					<table class="table table-bordered">
-						<tbody>
+						<tbody data-toggle="distpicker">
 						<tr>
 							<td class="width-15 active"><label class="pull-right">企业法人：</label></td>
 							<td class="width-35">
@@ -157,37 +199,61 @@
 						<tr>
 							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>主联系人：</label></td>
 							<td class="width-35">
-								<form:input path="contactId" htmlEscape="false"    class="form-control required"/>
+								<select name="contacts.id" id="tcontactId"  class="form-control required">
+									<c:if test="${customer.contacts.id!=null}">
+										<option value="${customer.contacts.id}"  mobile="${customer.contacts.mobile}" name="" htmlEscape="false">${customer.contacts.name}</option>
+									</c:if>
+									<c:if test="${customer.contacts.id==null}">
+										<option value="" name="" htmlEscape="false">暂无主联系人请选择</option>
+									</c:if>
+									<c:forEach items="${findList}" var="item">
+										<option value="${item.id}" name="" mobile="${item.mobile}" htmlEscape="false">${item.name}</option>
+									</c:forEach>
+								</select>
+								<%--<marketing:contactsSelect id="tcontactId" name="contacts.id" value="${customer.contacts.id}" labelName="contacts.name" labelValue="${customer.contacts.name}"
+														  fieldLabels="联系人姓名|联系方式|所在部门|职务|办公室号码" fieldKeys="name|mobile|department|title|officePhone" searchLabels="联系人姓名|所在部门|职务"
+														  searchKeys="name|department|title" title="选择所属公司" url="${ctx}/contacts/contacts/data?id=${customer.id}" cssClass="form-control "/>--%>
+
+
+
 							</td>
 							<td class="width-15 active"><label class="pull-right">联系电话：</label></td>
 							<td class="width-35">
-								<form:input path="contactId" htmlEscape="false"    class="form-control required"/>
+								<input name="mobile" value="${customer.contacts.mobile}" htmlEscape="false" class="form-control"/>
 							</td>
 						</tr>
-						<tr>
-							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>省份：</label></td>
-							<td class="width-35">
-								<form:input path="provincelId" htmlEscape="false"    class="form-control required"/>
-							</td>
-							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>城市：</label></td>
-							<td class="width-35">
-								<form:input path="cityId" htmlEscape="false"    class="form-control required"/>
-							</td>
-						</tr>
-						<tr>
-							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>区县：</label></td>
-							<td class="width-35">
-								<form:input path="countryId" htmlEscape="false"    class="form-control required"/>
-							</td>
-							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>镇街：</label></td>
-							<td class="width-35">
-								<form:input path="streetId" htmlEscape="false"    class="form-control required"/>
-							</td>
-						</tr>
+							<tr>
+								<td class="width-15 active"><label class="pull-right"><font color="red">*</font>省份：</label></td>
+								<td class="width-35" >
+									<select name="provincelId" id="province2" data-province="---- 选择省 ----" htmlEscape="false" class="form-control requireds">
+										<option  value="${customer.provincelId}" <c:if test="${customer.provincelId!=null&&customer.provincelId!='' }">selected="selected"</c:if> >${customer.provincelId}</option>
+									</select>
+
+									<%--<form:input path="provincelId" htmlEscape="false"    class="form-control required"/>--%>
+								</td>
+								<td class="width-15 active"><label class="pull-right"><font color="red">*</font>城市：</label></td>
+								<td class="width-35">
+									<select name="cityId" id="city2" data-city="---- 选择市 ----"  htmlEscape="false" class="form-control required"></select>
+									<%--<form:input path="cityId" htmlEscape="false"    class="form-control required"/>--%>
+								</td>
+							</tr>
+							<tr>
+								<td class="width-15 active"><label class="pull-right"><font color="red">*</font>区县：</label></td>
+								<td class="width-35">
+									<select  name="countryId" id="district2" data-district="---- 选择区 ----" htmlEscape="false" class="form-control required"></select>
+										<%--<form:input path="countryId" htmlEscape="false"    class="form-control required"/>--%>
+								</td>
+								<td class="width-15 active"><label class="pull-right"><font color="red">*</font>镇街：</label></td>
+								<td class="width-35">
+									<%--<select  name="streetId" id="street2" data-district="---- 选择街 ----" htmlEscape="false" class="form-control required"></select>--%>
+									<form:input path="streetId" htmlEscape="false"    class="form-control required"/>
+								</td>
+							</tr>
+
 						<tr>
 							<td class="width-15 active"><label class="pull-right">详细地址：</label></td>
 							<td class="width-35">
-								<form:input path="detailAddress" htmlEscape="false"    class="form-control "/>
+								<form:input path="detailAddress" htmlEscape="false"  class="form-control "/>
 							</td>
 							<td class="width-15 active"><label class="pull-right">GPS定位：</label></td>
 							<td class="width-35">
@@ -203,7 +269,7 @@
 							<td class="width-35">
 								<form:select path="industoryId" class="form-control required">
 									<form:option value="" label=""/>
-									<form:options items="${fns:getDictList('')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+									<form:options items="${fns:getDictList('sys_industry')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 								</form:select>
 							</td>
 						</tr>
@@ -212,7 +278,7 @@
 							<td class="width-35">
 								<form:select path="cusLevel" class="form-control ">
 									<form:option value="" label=""/>
-									<form:options items="${fns:getDictList('')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+									<form:options items="${fns:getDictList('customer_level')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 								</form:select>
 							</td>
 							<td class="width-15 active"><label class="pull-right">官网地址：</label></td>
@@ -252,8 +318,14 @@
 						</tr>
 						<tr>
 							<td class="width-15 active"><label class="pull-right">经营范围：</label></td>
-							<td class="width-35" colspan="3">
+							<td class="width-35">
 								<form:input path="business" htmlEscape="false"    class="form-control "/>
+							</td>
+							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>是否公海：</label></td>
+							<td class="width-35">
+								<%--<form:input path="isPublic" htmlEscape="false"    class="form-control required"/>--%>
+									<form:radiobutton path="isPublic" value="1" class="i-checks " checked="${checked}"/>是
+									<form:radiobutton path="isPublic" value="0" class="i-checks "/>否
 							</td>
 						</tr>
 						<tr>
@@ -436,5 +508,11 @@
 		 	</tbody>
 		</table>--%>
 	</form:form>
+<!-- 引入地址 begin -->
+<script src="${ctxStatic}/plugin/dist/js/bootstrap.min.js"></script>
+<script src="${ctxStatic}/plugin/dist/js/distpicker.data.js"></script>
+<script src="${ctxStatic}/plugin/dist/js/distpicker.js"></script>
+<script src="${ctxStatic}/plugin/dist/js/main.js"></script>
+<!-- 引入地址 end -->
 </body>
 </html>

@@ -37,21 +37,21 @@
 				<label class="label-item single-overflow pull-left" title="跟进状态Id：">跟进状态Id：</label>
 				<form:select path="statusId"  class="form-control m-b">
 					<form:option value="" label=""/>
-					<form:options items="${fns:getDictList('')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+					<form:options items="${fns:getDictList('follow_up_state')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 			</div>
 				<div class="col-xs-12 col-sm-6 col-md-2">
 					<label class="label-item single-overflow pull-left" title="客户等级：">客户等级：</label>
 					<form:select path="cusLevel"  class="form-control m-b">
 						<form:option value="" label=""/>
-						<form:options items="${fns:getDictList('')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+						<form:options items="${fns:getDictList('customer_level')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 					</form:select>
 				</div>
 			 <div class="col-xs-12 col-sm-6 col-md-2">
 				<label class="label-item single-overflow pull-left" title="行业Id：">行业Id：</label>
 				<form:select path="industoryId"  class="form-control m-b">
 					<form:option value="" label=""/>
-					<form:options items="${fns:getDictList('')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+					<form:options items="${fns:getDictList('sys_industry')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 			</div>
 		 <div class="col-xs-12 col-sm-6 col-md-4">
@@ -122,5 +122,6 @@
 	<script type="text/javascript" charset="UTF-8">
 		<%@include file="../../../static/common/js/search.js" %>
 	</script>
+
 </body>
 </html>

@@ -83,12 +83,18 @@ $(document).ready(function() {
                columns: [{
 		        checkbox: true
 		       
-		    }
-			,{
-		        field: 'cusId',
-		        title: '客户Id',
+		    },{
+                   title: '序号',
+                   field: '',
+                   align:'center',
+                   formatter: function (value, row, index) {
+                       return index+1;
+                   }
+               },{
+		        field: 'customer.name',
+		        title: '所属客户',
 		        sortable: true,
-		        sortName: 'cusId'
+		        sortName: 'customer.name'
 		        ,formatter:function(value, row , index){
 		        	value = jp.unescapeHTML(value);
 				   <c:choose>
@@ -107,7 +113,7 @@ $(document).ready(function() {
 		    }
 			,{
 		        field: 'name',
-		        title: '联系人姓名',
+		        title: '姓名',
 		        sortable: true,
 		        sortName: 'name'
 		       
@@ -118,31 +124,54 @@ $(document).ready(function() {
 		        sortable: true,
 		        sortName: 'gender',
 		        formatter:function(value, row , index){
-		        	return jp.getDictLabel(${fns:toJson(fns:getDictList(''))}, value, "-");
+		        	return jp.getDictLabel(${fns:toJson(fns:getDictList('sex'))}, value, "-");
 		        }
 		       
 		    }
+		    ,{
+                       field: 'mobile',
+                       title: '手机号码',
+                       sortable: true,
+                       sortName: 'mobile'
+
+             }
+             ,{
+                       field: 'officePhone',
+                       title: '办公室电话',
+                       sortable: true,
+                       sortName: 'officePhone'
+
+             }
 			,{
 		        field: 'state',
 		        title: '状态',
 		        sortable: true,
-		        sortName: 'state'
+		        sortName: 'state',
+                formatter:function(value, row , index){
+                           var a="";
+                           if (value==0) {
+                               a="停用";
+                           }else if (value==1) {
+                               a="使用";
+                           }
+                           return a;
+                }
 		       
 		    }
-			,{
-		        field: 'cardId',
-		        title: '身份证号码',
-		        sortable: true,
-		        sortName: 'cardId'
-		       
-		    }
+            ,{
+                       field: 'email',
+                       title: '邮件地址',
+                       sortable: true,
+                       sortName: 'email'
+
+            }
 			,{
 		        field: 'department',
 		        title: '部门',
 		        sortable: true,
 		        sortName: 'department',
 		        formatter:function(value, row , index){
-		        	return jp.getDictLabel(${fns:toJson(fns:getDictList(''))}, value, "-");
+		        	return jp.getDictLabel(${fns:toJson(fns:getDictList('sys_office_common'))}, value, "-");
 		        }
 		       
 		    }
@@ -152,62 +181,13 @@ $(document).ready(function() {
 		        sortable: true,
 		        sortName: 'title',
 		        formatter:function(value, row , index){
-		        	return jp.getDictLabel(${fns:toJson(fns:getDictList(''))}, value, "-");
+		        	return jp.getDictLabel(${fns:toJson(fns:getDictList('office_duties'))}, value, "-");
 		        }
 		       
-		    }
-			,{
-		        field: 'officePhone',
-		        title: '办公室电话',
-		        sortable: true,
-		        sortName: 'officePhone'
-		       
-		    }
-			,{
-		        field: 'mobile',
-		        title: '手机号码',
-		        sortable: true,
-		        sortName: 'mobile'
-		       
-		    }
-			,{
-		        field: 'email',
-		        title: '邮件地址',
-		        sortable: true,
-		        sortName: 'email'
-		       
-		    }
-			,{
-		        field: 'qqNumber',
-		        title: 'QQ号码',
-		        sortable: true,
-		        sortName: 'qqNumber'
-		       
-		    }
-			,{
-		        field: 'wxId',
-		        title: '微信Id',
-		        sortable: true,
-		        sortName: 'wxId'
-		       
-		    }
-			,{
-		        field: 'influence',
-		        title: '决策影响力',
-		        sortable: true,
-		        sortName: 'influence'
-		       
-		    }
-			,{
-		        field: 'description',
-		        title: '性格描述',
-		        sortable: true,
-		        sortName: 'description'
-		       
-		    }
-			,{
+		    },
+			{
 		        field: 'remarks',
-		        title: '备注信息',
+		        title: '信息完整度',
 		        sortable: true,
 		        sortName: 'remarks'
 		       
