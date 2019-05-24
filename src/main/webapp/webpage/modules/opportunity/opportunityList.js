@@ -92,40 +92,40 @@ $(document).ready(function() {
                            return index+1;
                        }
                    },{
+                       field: 'oppName',
+                       title: '商机名称',
+                       sortable: true,
+                       sortName: 'oppName'
+
+                   },
+				   {
+					field: 'oppNo',
+					title: '商机编号',
+					sortable: true,
+					sortName: 'oppNo'
+					,formatter:function(value, row , index){
+						value = jp.unescapeHTML(value);
+					   <c:choose>
+						   <c:when test="${fns:hasPermission('opportunity:opportunity:edit')}">
+							  return "<a href='javascript:edit(\""+row.id+"\")'>"+value+"</a>";
+						  </c:when>
+						  <c:when test="${fns:hasPermission('opportunity:opportunity:view')}">
+							  return "<a href='javascript:view(\""+row.id+"\")'>"+value+"</a>";
+						  </c:when>
+						  <c:otherwise>
+							  return value;
+						  </c:otherwise>
+					   </c:choose>
+					 }
+		       
+		    }
+			,{
                        field: 'customer.name',
                        title: '客户名称',
                        sortable: true,
                        sortName: 'customer.name'
 
-                   },
-				   {
-		        field: 'oppNo',
-		        title: '商机编号',
-		        sortable: true,
-		        sortName: 'oppNo'
-		        ,formatter:function(value, row , index){
-		        	value = jp.unescapeHTML(value);
-				   <c:choose>
-					   <c:when test="${fns:hasPermission('opportunity:opportunity:edit')}">
-					      return "<a href='javascript:edit(\""+row.id+"\")'>"+value+"</a>";
-				      </c:when>
-					  <c:when test="${fns:hasPermission('opportunity:opportunity:view')}">
-					      return "<a href='javascript:view(\""+row.id+"\")'>"+value+"</a>";
-				      </c:when>
-					  <c:otherwise>
-					      return value;
-				      </c:otherwise>
-				   </c:choose>
-		         }
-		       
-		    }
-			,{
-		        field: 'oppName',
-		        title: '商机名称',
-		        sortable: true,
-		        sortName: 'oppName'
-		       
-		    },{
+             },{
                        field: 'oppStageId',
                        title: '商机阶段',
                        sortable: true,
@@ -149,10 +149,10 @@ $(document).ready(function() {
 
              }
               ,{
-                       field: 'empId',
+                       field: 'oppUser.name',
                        title: '跟进人员',
                        sortable: true,
-                       sortName: 'empId'
+                       sortName: 'oppUser.name'
 
               },{
                        field: 'lastTime',

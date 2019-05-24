@@ -7,6 +7,8 @@ import com.jeeplus.core.persistence.BaseMapper;
 import com.jeeplus.core.persistence.annotation.MyBatisMapper;
 import com.jeeplus.modules.customer.entity.Customer;
 
+import java.util.List;
+
 /**
  * 客户档案MAPPER接口
  * @author Vigny
@@ -14,5 +16,6 @@ import com.jeeplus.modules.customer.entity.Customer;
  */
 @MyBatisMapper
 public interface CustomerMapper extends BaseMapper<Customer> {
-	
+
+    List<Customer> findHighList(Customer customer);
 }

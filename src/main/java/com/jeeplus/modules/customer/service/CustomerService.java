@@ -33,7 +33,21 @@ public class CustomerService extends CrudService<CustomerMapper, Customer> {
 	public Page<Customer> findPage(Page<Customer> page, Customer customer) {
 		return super.findPage(page, customer);
 	}
-	
+
+	/**
+	 * 公海客户
+	 * @param page 分页对象
+	 * @param customer
+	 * @return
+	 */
+	public Page<Customer> findHighPage(Page<Customer> page, Customer customer) {
+		customer.setPage(page);
+		page.setList(mapper.findHighList(customer));
+		return page;
+	}
+
+
+
 	@Transactional(readOnly = false)
 	public void save(Customer customer) {
 		super.save(customer);

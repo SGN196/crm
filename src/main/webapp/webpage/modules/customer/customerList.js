@@ -154,11 +154,11 @@ $(document).ready(function() {
 		       
 		    }
 			,{
-		        field: 'empId',
+		        field: 'tuser.name',
 		        title: '销售员',
                 align:'center',
 		        sortable: true,
-		        sortName: 'empId'
+		        sortName: 'tuser.name'
 		       
 		    }
 			,{

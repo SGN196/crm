@@ -161,10 +161,10 @@ function initData() {
 
         }
             ,{
-                field: 'oppId',
-                title: '商机编号',
+                field: 'opportunity.oppName',
+                title: '商机',
                 sortable: true,
-                sortName: 'oppId'
+                sortName: 'opportunity.oppName'
                 ,formatter:function(value, row , index){
                     value = jp.unescapeHTML(value);
                 <c:choose>
@@ -199,10 +199,10 @@ function initData() {
 
             }
             ,{
-                field: 'contactID',
+                field: 'opportunity.customer.contacts.name',
                 title: '联系人',
                 sortable: true,
-                sortName: 'contactID'
+                sortName: 'opportunity.customer.contacts.name'
             }
             ,{
                 field: 'date',
@@ -219,17 +219,10 @@ function initData() {
 
             }
             ,{
-                field: 'empID',
-                title: '跟进人编号',
+                field: 'activitieUser.name',
+                title: '跟进人',
                 sortable: true,
-                sortName: 'empID'
-
-            }
-            ,{
-                field: 'billDate',
-                title: '记录时间',
-                sortable: true,
-                sortName: 'billDate'
+                sortName: 'activitieUser.name'
 
             }
             ,{

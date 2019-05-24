@@ -97,7 +97,9 @@
 							<td class="width-15 active"><label class="pull-right">销售人员：</label></td>
 							<td class="width-35">
 								<%--<form:input path="empId" htmlEscape="false"    class="form-control "/>--%>
-                                <form:input  path="empId" id="empId" name="empId" htmlEscape="false" class="form-control " style="background: url(${ctxStatic}/common/images/user.png) no-repeat; background-position: left; background-size: 25px 25px; cursor: pointer; padding-left: 25px;"/>
+									<sys:userselect id="tuser" name="empId" value="${customer.empId}" labelName="tuser.name" labelValue="${customer.tuser.name}"
+													cssClass="form-control" cssStyle="background: url(${ctxStatic}/common/images/user.png) no-repeat; background-position: left; background-size: 25px 25px; cursor: pointer; padding-left: 25px;"/>
+                                <%--<form:input  path="empId" id="empId" name="empId" htmlEscape="false" class="form-control " style="background: url(${ctxStatic}/common/images/user.png) no-repeat; background-position: left; background-size: 25px 25px; cursor: pointer; padding-left: 25px;"/>--%>
 							</td>
 						</tr>
 						<tr>
@@ -157,12 +159,7 @@
 								<td class="width-35">
 									<fmt:formatDate value="${customer.createDate}" pattern="yyyy-MM-dd HH:mm:ss" var="time"/>
 									<input value="${time}" htmlEscape="false" class="form-control " readonly="true"/>
-										<%--<div class='input-group form_datetime' id='createDate'>
-                                            <input type='text'  name="createDate" class="form-control required"  value="<fmt:formatDate value="${传.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"/>
-                                            <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                        </div>--%>
+
 								</td>
 							</tr>
 						</c:if>
@@ -196,7 +193,8 @@
 								<form:input path="usedName" htmlEscape="false"    class="form-control "/>
 							</td>
 						</tr>
-						<tr>
+						<c:if test="${findList!=null}">
+							<tr>
 							<td class="width-15 active"><label class="pull-right"><font color="red">*</font>主联系人：</label></td>
 							<td class="width-35">
 								<select name="contacts.id" id="tcontactId"  class="form-control required">
@@ -210,9 +208,9 @@
 										<option value="${item.id}" name="" mobile="${item.mobile}" htmlEscape="false">${item.name}</option>
 									</c:forEach>
 								</select>
-								<%--<marketing:contactsSelect id="tcontactId" name="contacts.id" value="${customer.contacts.id}" labelName="contacts.name" labelValue="${customer.contacts.name}"
-														  fieldLabels="联系人姓名|联系方式|所在部门|职务|办公室号码" fieldKeys="name|mobile|department|title|officePhone" searchLabels="联系人姓名|所在部门|职务"
-														  searchKeys="name|department|title" title="选择所属公司" url="${ctx}/contacts/contacts/data?id=${customer.id}" cssClass="form-control "/>--%>
+									<%--<marketing:contactsSelect id="tcontactId" name="contacts.id" value="${customer.contacts.id}" labelName="contacts.name" labelValue="${customer.contacts.name}"
+                                                              fieldLabels="联系人姓名|联系方式|所在部门|职务|办公室号码" fieldKeys="name|mobile|department|title|officePhone" searchLabels="联系人姓名|所在部门|职务"
+                                                              searchKeys="name|department|title" title="选择所属公司" url="${ctx}/contacts/contacts/data?id=${customer.id}" cssClass="form-control "/>--%>
 
 
 
@@ -222,11 +220,11 @@
 								<input name="mobile" value="${customer.contacts.mobile}" htmlEscape="false" class="form-control"/>
 							</td>
 						</tr>
+						</c:if>
 							<tr>
 								<td class="width-15 active"><label class="pull-right"><font color="red">*</font>省份：</label></td>
 								<td class="width-35" >
-									<select name="provincelId" id="province2" data-province="---- 选择省 ----" htmlEscape="false" class="form-control requireds">
-										<option  value="${customer.provincelId}" <c:if test="${customer.provincelId!=null&&customer.provincelId!='' }">selected="selected"</c:if> >${customer.provincelId}</option>
+									<select name="provincelId" id="province2"  <c:if test="${customer.provincelId==null}">data-province="---- 选择市 ----"</c:if> <c:if test="${customer.provincelId!=null}">data-province=${customer.provincelId}</c:if> htmlEscape="false" class="form-control requireds">
 									</select>
 
 									<%--<form:input path="provincelId" htmlEscape="false"    class="form-control required"/>--%>

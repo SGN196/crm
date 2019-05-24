@@ -7,6 +7,8 @@ import com.jeeplus.core.persistence.BaseMapper;
 import com.jeeplus.core.persistence.annotation.MyBatisMapper;
 import com.jeeplus.modules.oppactivities.entity.OppActivities;
 
+import java.util.List;
+
 /**
  * 商机跟进MAPPER接口
  * @author Commit
@@ -14,5 +16,7 @@ import com.jeeplus.modules.oppactivities.entity.OppActivities;
  */
 @MyBatisMapper
 public interface OppActivitiesMapper extends BaseMapper<OppActivities> {
-	
+    OppActivities getByOppId(String oppId);
+
+    List<OppActivities> findListByDate(OppActivities entity);
 }

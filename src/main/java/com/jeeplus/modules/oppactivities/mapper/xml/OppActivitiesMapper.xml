@@ -17,11 +17,17 @@
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
-		a.del_flag AS "delFlag"
+		a.del_flag AS "delFlag",
+		activitieUser.name AS "activitieUser.name",
+		opportunity.f_oppname AS "opportunity.oppName",
+		contacts.f_name AS "opportunity.customer.contacts.name"
+
 	</sql>
 	
 	<sql id="oppActivitiesJoins">
-		
+		LEFT JOIN  sys_user activitieUser ON activitieUser.id=a.f_empid
+		LEFT JOIN  ic_opportunity opportunity ON opportunity.id=a.f_oppid
+		LEFT JOIN  tb_contacts contacts ON contacts.id=a.f_contactid
 	</sql>
 	
     
@@ -77,6 +83,7 @@
 			</otherwise>
 		</choose>
 	</select>
+
 	
 	<insert id="insert">
 		INSERT INTO ic_oppactivities(
@@ -103,7 +110,7 @@
 			#{contactID},
 			#{date},
 			#{detail},
-			#{empID},
+			#{createBy.id},
 			#{billDate},
 			#{createBy.id},
 			#{createDate},
@@ -122,7 +129,7 @@
 			f_contactid = #{contactID},
 			f_date = #{date},
 			f_detail = #{detail},
-			f_empid = #{empID},
+			f_empid = #{updateBy.id},
 			f_billdate = #{billDate},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
@@ -148,6 +155,35 @@
 	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
 	<select id="findUniqueByProperty" resultType="OppActivities" statementType="STATEMENT">
 		select * FROM ic_oppactivities  where ${propertyName} = '${value}'
+	</select>
+	<!--根据商机编号查询商机跟进情况-->
+	<select id="getByOppId" resultType="OppActivities">
+		SELECT
+		<include refid="oppActivitiesColumns"/>,ABS(NOW() - a.f_date) AS diffTime
+		FROM ic_oppactivities a
+		<include refid="oppActivitiesJoins"/>
+		WHERE a.f_oppid = #{oppId}
+		ORDER BY diffTime ASC
+		LIMIT 0, 1
+	</select>
+	<!--跟进按时间排序倒序-->
+	<select id="findListByDate" resultType="OppActivities" >
+		SELECT
+		<include refid="oppActivitiesColumns"/>
+		FROM ic_oppactivities a
+		<include refid="oppActivitiesJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.f_date DESC
+			</otherwise>
+		</choose>
 	</select>
 	
 </mapper>

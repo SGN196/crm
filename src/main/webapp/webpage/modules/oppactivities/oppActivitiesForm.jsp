@@ -8,9 +8,12 @@
 
 		$(document).ready(function() {
             $("textarea").css("resize", "none");
-
             $('#date').datetimepicker({
-                format: "YYYY-MM-DD HH:mm"
+                format: "YYYY-MM-DD HH:mm:ss"
+            });
+
+            $('#billDate').datetimepicker({
+                format: "YYYY-MM-DD HH:mm:ss"
             });
 		});
 		function save() {
@@ -57,23 +60,26 @@
 				<tr>
 					<td class="width-15 active"><label class="pull-right">排序序号：</label></td>
 					<td class="width-35">
-						<form:input path="order" htmlEscape="false"    class="form-control isIntGteZero"/>
+						<form:input path="order" htmlEscape="false" class="form-control isIntGteZero"/>
 					</td>
 					<td class="width-15 active"><label class="pull-right"><font color="red">*</font>联系人编号：</label></td>
 					<td class="width-35">
-						<form:input path="contactID" htmlEscape="false"    class="form-control"/>
-						<%--<form:select path="contactID" class="form-control required">
-							<form:option value="" label=""/>
-							<form:options items="${fns:getDictList('')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
-						</form:select>--%>
+						<%--<form:hidden path="contactID"  htmlEscape="false" class="form-control required"/>--%>
+						<input <c:if test="${oppActivities.id!=null}"> type="hidden"</c:if>
+								<c:if test="${oppActivities.id==null}"> type="text"</c:if>
+								name="contactID" value="${opportunity.customer.contacts.id}" class="form-control required" readonly>
+						<input <c:if test="${oppActivities.id!=null}"> type="text"</c:if>
+								<c:if test="${oppActivities.id==null}"> type="hidden"</c:if>
+								value="${oppActivities.opportunity.customer.contacts.name}" class="form-control required" readonly/>
 					</td>
 				</tr>
 				<tr>
 					<td class="width-15 active"><label class="pull-right"><font color="red">*</font>跟进时间：</label></td>
 					<td class="width-35">
 						<%--<form:input path="date" htmlEscape="false"    class="form-control required"/>--%>
+							<fmt:formatDate value="${oppActivities.date}" pattern="yyyy-MM-dd HH:mm:ss" var="time"/>
 						<div class='input-group form_datetime' id='date'>
-							<input type='text' name="date" class="form-control "  value=""/>
+							<input type='text' name="date" class="form-control " value="${time}"/>
 							<span class="input-group-addon">
 								<span class="glyphicon glyphicon-calendar"></span>
 							</span>
@@ -91,11 +97,18 @@
 				<tr>
 					<td class="width-15 active"><label class="pull-right">跟进人编号：</label></td>
 					<td class="width-35">
-						<form:input path="empID" htmlEscape="false"    class="form-control "/>
+						<form:input path="empID" htmlEscape="false" class="form-control " readonly="true">
 					</td>
 					<td class="width-15 active"><label class="pull-right">记录时间：</label></td>
 					<td class="width-35">
-						<form:input path="billDate" htmlEscape="false"    class="form-control "/>
+						<fmt:formatDate value="${oppActivities.billDate}" pattern="yyyy-MM-dd HH:mm:ss" var="bill"/>
+						<div class='input-group form_datetime' id='billDate'>
+							<input type='text' name="billDate" class="form-control " value="${bill}"/>
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>
+						</div>
+						<%--<form:input path="billDate" htmlEscape="false"    class="form-control "/>--%>
 					</td>
 				</tr>
 				<tr>

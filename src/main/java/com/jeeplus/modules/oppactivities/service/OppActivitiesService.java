@@ -5,6 +5,8 @@ package com.jeeplus.modules.oppactivities.service;
 
 import java.util.List;
 
+import com.jeeplus.modules.sys.mapper.UserMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,10 @@ import com.jeeplus.modules.oppactivities.mapper.OppActivitiesMapper;
 @Service
 @Transactional(readOnly = true)
 public class OppActivitiesService extends CrudService<OppActivitiesMapper, OppActivities> {
+
+	@Autowired
+	private OppActivitiesMapper oppActivitiesMapper;
+
 
 	public OppActivities get(String id) {
 		return super.get(id);
@@ -43,5 +49,19 @@ public class OppActivitiesService extends CrudService<OppActivitiesMapper, OppAc
 	public void delete(OppActivities oppActivities) {
 		super.delete(oppActivities);
 	}
-	
+
+
+/*根据商机编号查时间最接近当前时间的一条记录*/
+	public OppActivities getByOppId(String oppId){
+		return oppActivitiesMapper.getByOppId(oppId);
+	}
+
+	public Page<OppActivities> findPageByDate(Page<OppActivities> page, OppActivities entity) {
+		dataRuleFilter(entity);
+		entity.setPage(page);
+		page.setList(oppActivitiesMapper.findListByDate(entity));
+		return page;
+	}
+
+
 }

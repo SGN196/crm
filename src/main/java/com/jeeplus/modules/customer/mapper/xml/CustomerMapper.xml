@@ -67,13 +67,15 @@
 		contacts.f_name AS "contacts.name",
 		contacts.f_mobile AS "contacts.mobile",
 		office.name AS "office.name",
-		createBy.name AS "createBy.name"
+		createBy.name AS "createBy.name",
+		tuser.name AS "tuser.name"
 	</sql>
 	
 	<sql id="customerJoins">
-		LEFT JOIN tb_contacts contacts ON contacts.id = a.f_contactid
-		LEFT JOIN  sys_office office ON office.id=a.f_deptid
-		LEFT JOIN  sys_user createBy ON createBy.id=a.create_by
+		LEFT JOIN tb_contacts contacts ON contacts.id = a.f_contactid/*联系人*/
+		LEFT JOIN  sys_office office ON office.id=a.f_deptid/*部门*/
+		LEFT JOIN  sys_user createBy ON createBy.id=a.create_by/*创建者*/
+		LEFT JOIN  sys_user tuser ON tuser.id=a.f_empid/*销售人员*/
 	</sql>
 	
     
@@ -120,6 +122,7 @@
 					<if test="dbName == 'mssql'">'%'+#{legalPerson}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{legalPerson},'%')</if>
 			</if>
+			AND a.f_empid &lt;&gt;''
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -355,6 +358,54 @@
 	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
 	<select id="findUniqueByProperty" resultType="Customer" statementType="STATEMENT">
 		select * FROM tb_customer  where ${propertyName} = '${value}'
+	</select>
+
+	<!--公海客户-->
+	<select id="findHighList" resultType="Customer" >
+		SELECT
+		<include refid="customerColumns"/>
+		FROM tb_customer a
+		<include refid="customerJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+			<if test="deptId != null and deptId != ''">
+				AND a.f_deptid LIKE
+				<if test="dbName == 'oracle'">'%'||#{deptId}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{deptId}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{deptId},'%')</if>
+			</if>
+			<if test="name != null and name != ''">
+				AND a.f_name LIKE
+				<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="statusId != null and statusId != ''">
+				AND a.f_statusid = #{statusId}
+			</if>
+			<if test="industoryId != null and industoryId != ''">
+				AND a.f_industoryid = #{industoryId}
+			</if>
+			<if test="cusLevel != null and cusLevel != ''">
+				AND a.f_cuslevel = #{cusLevel}
+			</if>
+			<if test="legalPerson != null and legalPerson != ''">
+				AND a.f_legalperson LIKE
+				<if test="dbName == 'oracle'">'%'||#{legalPerson}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{legalPerson}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{legalPerson},'%')</if>
+			</if>
+			AND a.f_empid =''
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
 	</select>
 	
 </mapper>

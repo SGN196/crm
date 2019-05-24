@@ -13,6 +13,7 @@ import com.jeeplus.core.persistence.Page;
 import com.jeeplus.core.web.BaseController;
 import com.jeeplus.modules.contacts.entity.Contacts;
 import com.jeeplus.modules.contacts.service.ContactsService;
+import com.jeeplus.modules.contacts.utils.PropertyConfigUtil;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.Map;
+import java.lang.reflect.Field;
+
 
 /**
  * 客户联系人Controller
@@ -41,6 +44,8 @@ public class ContactsController extends BaseController {
 
 	@Autowired
 	private ContactsService contactsService;
+
+	private static PropertyConfigUtil property = PropertyConfigUtil.getInstance("properties/config.properties");
 	
 	@ModelAttribute
 	public Contacts get(@RequestParam(required=false) String id) {
@@ -53,7 +58,8 @@ public class ContactsController extends BaseController {
 		}
 		return entity;
 	}
-	
+
+
 	/**
 	 * 客户联系人列表页面
 	 */
@@ -107,12 +113,34 @@ public class ContactsController extends BaseController {
 			j.setMsg(errMsg);
 			return j;
 		}
+		int sum = 0;
+		if (contacts!=null){
+			Class cls =contacts.getClass();
+			Field[] fields = cls.getDeclaredFields();
+			List<String> list=property.printAllProperty();
+			System.out.println(list.size());
+			for(int i=0; i<fields.length; i++){
+				Field f = fields[i];
+				f.setAccessible(true);
+				if (f.get(contacts)!=null){
+					for (int k =0;k<list.size();k++) {
+							if (list.get(k).equals(f.getName())) {
+								int degree = Integer.parseInt(property.getValue(f.getName()));
+								sum += degree;
+							}
+
+					}
+				}
+			}
+			System.out.println(sum+"%");
+		}
 		//新增或编辑表单保存
 		contactsService.save(contacts);//保存
 		j.setSuccess(true);
 		j.setMsg("保存客户联系人成功");
 		return j;
 	}
+
 	
 	/**
 	 * 删除客户联系人

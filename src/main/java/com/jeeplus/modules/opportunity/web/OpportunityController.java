@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
 
+import com.jeeplus.modules.oppactivities.entity.OppActivities;
+import com.jeeplus.modules.oppactivities.service.OppActivitiesService;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,9 @@ public class OpportunityController extends BaseController {
 
 	@Autowired
 	private OpportunityService opportunityService;
+
+	@Autowired
+	private OppActivitiesService oppActivitiesService;
 	
 	@ModelAttribute
 	public Opportunity get(@RequestParam(required=false) String id) {
@@ -98,6 +103,9 @@ public class OpportunityController extends BaseController {
 			int twoPlace = random.nextInt(99);
 			String two = String.format("%02d", twoPlace);
 			opportunity.setOppNo("BUS" + year + "-" + month + "-" + day + "-" + two);
+		}else {
+			OppActivities oppActivities=oppActivitiesService.getByOppId(opportunity.getId());
+			model.addAttribute("oppActivities", oppActivities);
 		}
 		model.addAttribute("opportunity", opportunity);
 		return "modules/opportunity/opportunityForm";

@@ -83,6 +83,16 @@ public class OppActivitiesController extends BaseController {
 		Page<OppActivities> page = oppActivitiesService.findPage(new Page<OppActivities>(request, response), oppActivities); 
 		return getBootstrapData(page);
 	}
+	/**
+	 * 商机跟进列表数据按时间倒序
+	 */
+	@ResponseBody
+	@RequiresPermissions("oppactivities:oppActivities:list")
+	@RequestMapping(value = "orderByDate")
+	public Map<String, Object> orderByDate(OppActivities oppActivities, HttpServletRequest request, HttpServletResponse response, Model model) {
+		Page<OppActivities> page = oppActivitiesService.findPageByDate(new Page<OppActivities>(request, response), oppActivities);
+		return getBootstrapData(page);
+	}
 
 	/**
 	 * 查看，增加，编辑商机跟进表单页面
@@ -96,17 +106,7 @@ public class OppActivitiesController extends BaseController {
 		return "modules/oppactivities/oppActivitiesForm";
 	}
 
-	/**
-	 *
-	 * @return
-	 */
-	/*
-	@RequiresPermissions(value={"oppactivities:oppActivities:add"},logical=Logical.OR)
-	@RequestMapping(value = "oppForm")
-	public String oppByIdForm(){
 
-		return "";
-	}*/
 
 	/**
 	 * 保存商机跟进

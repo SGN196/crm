@@ -66,9 +66,9 @@
 												  fieldLabels="客户名称|客户法人|跟进状态" fieldKeys="name|legalPerson|statusId" searchLabels="客户名称|客户法人|跟进状态" searchKeys="name|legalPerson|statusId" title="选择所属公司" url="${ctx}/customer/customer/data" cssClass="form-control "/>--%>
 
 					</td>
-					<td class="width-15 active"><label class="pull-right">身份证号码：</label></td>
+					<td class="width-15 active"><label class="pull-right"><font color="red">*</font>身份证号码：</label></td>
 					<td class="width-35">
-						<form:input path="cardId" htmlEscape="false" class="form-control "/>
+						<form:input path="cardId" htmlEscape="false" class="form-control required"/>
 					</td>
 				</tr>
 				<tr>
@@ -77,9 +77,9 @@
 						<form:radiobutton path="state" value="1" class="i-checks " checked="${checked}"/>使用
 						<form:radiobutton path="state" value="0" class="i-checks "/>停用
 					</td>
-					<td class="width-15 active"><label class="pull-right">手机号码：</label></td>
+					<td class="width-15 active"><label class="pull-right"><font color="red">*</font>手机号码：</label></td>
 					<td class="width-35">
-						<form:input path="mobile" htmlEscape="false"    class="form-control "/>
+						<form:input path="mobile" htmlEscape="false" class="form-control required"/>
 					</td>
 				</tr>
 				<tr>

@@ -70,7 +70,7 @@ public class CustomerController extends BaseController {
 		return "modules/customer/customerList";
 	}
 	
-		/**
+	/**
 	 * 客户档案列表数据
 	 */
 	@ResponseBody
@@ -78,6 +78,26 @@ public class CustomerController extends BaseController {
 	@RequestMapping(value = "data")
 	public Map<String, Object> data(Customer customer, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<Customer> page = customerService.findPage(new Page<Customer>(request, response), customer); 
+		return getBootstrapData(page);
+	}
+
+	/**
+	 * 公海客户档案列表页面
+	 */
+	@RequiresPermissions("customer:customer:high")
+	@RequestMapping(value = {"highList", ""})
+	public String highList(Customer customer, Model model) {
+		model.addAttribute("customer", customer);
+		return "modules/high/highList";
+	}
+	/**
+	 * 公海客户档案列表数据
+	 */
+	@ResponseBody
+	@RequiresPermissions("customer:customer:high")
+	@RequestMapping(value = "high")
+	public Map<String, Object> high(Customer customer, HttpServletRequest request, HttpServletResponse response) {
+		Page<Customer> page = customerService.findHighPage(new Page<Customer>(request, response), customer);
 		return getBootstrapData(page);
 	}
 
@@ -100,12 +120,12 @@ public class CustomerController extends BaseController {
 			int threePlace = random.nextInt(999);
 			String three = String.format("%02d", threePlace);
 			customer.setNumber("CUS" + year + "-" + month + "-" + day + "-" + two + "-" + three);
+		}else {
+			Contacts contacts =new Contacts();
+			contacts.setCustomer(customer);
+			List<Contacts>  findList = contactsService.findList(contacts);
+			model.addAttribute("findList", findList);
 		}
-		Contacts contacts =new Contacts();
-		contacts.setCustomer(customer);
-		List<Contacts>  findList = contactsService.findList(contacts);
-		System.out.println(findList);
-		model.addAttribute("findList", findList);
 		model.addAttribute("customer", customer);
 		return "modules/customer/customerForm";
 	}

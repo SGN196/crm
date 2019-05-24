@@ -74,7 +74,8 @@ public class Customer extends DataEntity<Customer> {
 	private Integer practicalPatentNum;		// 实用型专利数量
 	private Contacts contacts;//联系人
 	private Office office;//所属部门
-	private String area;		// 归属区域
+	private User tuser;//销售人员
+
 	
 	public Customer() {
 		super();
@@ -579,6 +580,15 @@ public class Customer extends DataEntity<Customer> {
 
 	public void setOffice(Office office) {
 		this.office = office;
+	}
+
+	@ExcelField(title="销售人员", fieldType=User.class, value="tusers.name", align=2, sort=56)
+	public User getTuser() {
+		return tuser;
+	}
+
+	public void setTuser(User tuser) {
+		this.tuser = tuser;
 	}
 	
 }

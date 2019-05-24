@@ -10,7 +10,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jeeplus.core.persistence.DataEntity;
 import com.jeeplus.common.utils.excel.annotation.ExcelField;
 import com.jeeplus.modules.customer.entity.Customer;
+import com.jeeplus.modules.oppactivities.entity.OppActivities;
 import com.jeeplus.modules.sys.entity.Office;
+import com.jeeplus.modules.sys.entity.User;
 
 /**
  * 线索商机管理列表Entity
@@ -42,6 +44,7 @@ public class Opportunity extends DataEntity<Opportunity> {
 	private Customer customer;//客户
 	private Office company;	// 归属公司
 	private Office office;	// 归属部门
+	private User oppUser;//跟进人
 
 	
 	public Opportunity() {
@@ -255,5 +258,11 @@ public class Opportunity extends DataEntity<Opportunity> {
 	public void setOffice(Office office) {
 		this.office = office;
 	}
-	
+
+	@ExcelField(title="跟进人", fieldType=User.class, align=2, sort=23)
+	public User getOppUser() { return oppUser; }
+	public void setOppUser(User oppUser) {
+		this.oppUser = oppUser;
+	}
+
 }

@@ -110,26 +110,35 @@
 											<sys:treeselect id="office" name="office.id" value="${opportunity.office.id}" labelName="office.name" labelValue="${opportunity.office.name}"
 															allowClear="true" title="部门" url="/sys/office/treeData?type=2" cssClass="form-control required" notAllowSelectParent="true"/>
 									</td>
-									<td class="width-15 active"><label class="pull-right"><font color="red">*</font>跟进人员编号：</label></td>
-									<td class="width-35">
-										<form:input path="empId" htmlEscape="false"    class="form-control required"/>
-									</td>
-								</tr>
-								<tr>
 									<td class="width-15 active"><label class="pull-right"><font color="red">*</font>商机阶段编号：</label></td>
 									<td class="width-35">
-										<%--<form:input path="oppStageId" htmlEscape="false"    class="form-control required"/>--%>
-											<form:select path="oppStageId" class="form-control required">
-												<form:option value="" label=""/>
-												<form:options items="${fns:getDictList('business_opportunity_stage')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
-											</form:select>
+											<%--<form:input path="oppStageId" htmlEscape="false"    class="form-control required"/>--%>
+										<form:select path="oppStageId" class="form-control required">
+											<form:option value="" label=""/>
+											<form:options items="${fns:getDictList('business_opportunity_stage')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+										</form:select>
 									</td>
-									<td class="width-15 active"><label class="pull-right">最近跟进：</label></td>
-									<td class="width-35">
-										<%--<form:input path="" htmlEscape="false"    class="form-control required isFloatGteZero"/>--%>
-										<input type="text"  htmlEscape="false"    class="form-control"/>
-									</td>
+
 								</tr>
+								<c:if test="${oppActivities.empID!=null}">
+									<tr>
+										<td class="width-15 active"><label class="pull-right">跟进人员编号：</label></td>
+										<td class="width-35">
+											<%--<form:input path="empId" htmlEscape="false" class="form-control"/>--%>
+											<form:hidden path="empId"  htmlEscape="false" class="form-control required"/>
+											<input type="hidden" id="s" value="${oppActivities.empID}" class="form-control required" readonly>
+											<input type="text" value="${opportunity.oppUser.name}" class="form-control required" readonly="true"/>
+										</td>
+										<td class="width-15 active"><label class="pull-right">最近跟进：</label></td>
+										<td class="width-35">
+											<fmt:formatDate value="${oppActivities.date}" pattern="yyyy-MM-dd HH:mm:ss" var="date"/>
+											<opp:oppActivitiesByOppId id="tdate" name="lastTime" value="${date}" labelName="oppActivities.date" labelValue="${date}"
+											fieldLabels="跟进人|跟进时间|跟进内容" fieldKeys="empID|date|detail" searchLabels="跟进人|跟进时间|跟进内容" searchKeys="empID|date|detail"
+											title="商机跟进情况" url="${ctx}/oppactivities/oppActivities/orderByDate"  cssClass="form-control"/>
+										</td>
+									</tr
+								</c:if>
+
 								<c:if test="${opportunity.createBy.id!=null&& opportunity.createBy.id!=''}">
 									<tr>
 										<td class="width-15 active"><label class="pull-right">创建人：</label></td>
@@ -205,9 +214,9 @@
 								<td class="width-35">
 									<form:input path="lastTime" htmlEscape="false"    class="form-control "/>
 								</td>--%>
-								<td class="width-15 active"><label class="pull-right"><font color="red">*</font>延时申请次数：</label></td>
+								<td class="width-15 active"><label class="pull-right">延时申请次数：</label></td>
 								<td class="width-35">
-									<form:input path="deayTimes" htmlEscape="false"    class="form-control required"/>
+									<form:input path="deayTimes" htmlEscape="false" class="form-control"/>
 								</td>
 							</tr>
 							<tr>

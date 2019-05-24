@@ -30,10 +30,13 @@
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
 		customer.f_name AS "customer.name",
+		customer.f_contactid AS "customer.contacts.id",/*联系人*/
 		office.name AS "office.name",
 		company.name AS "company.name",
 		updateBy.name AS "updateBy.name",
-		createBy.name AS "createBy.name"
+		createBy.name AS "createBy.name",
+		oppUser.name AS "oppUser.name"
+
 
 	</sql>
 	
@@ -43,6 +46,7 @@
 		LEFT JOIN sys_office company ON company.id = a.f_orgid/*公司*/
 		LEFT JOIN sys_user updateBy ON updateBy.id = a.update_by/*更新者*/
 		LEFT JOIN sys_user createBy ON createBy.id = a.create_by/*创建者*/
+		LEFT JOIN sys_user oppUser ON oppUser.id = a.f_empid/*跟进者*/
 	</sql>
 	
     

@@ -21,7 +21,7 @@ import com.jeeplus.core.persistence.Page;
  */
 @Transactional(readOnly = true)
 public abstract class CrudService<M extends BaseMapper<T>, T extends DataEntity<T>> extends BaseService {
-	
+
 	/**
 	 * 持久层对象
 	 */
@@ -36,7 +36,7 @@ public abstract class CrudService<M extends BaseMapper<T>, T extends DataEntity<
 	public T get(String id) {
 		return mapper.get(id);
 	}
-	
+
 	/**
 	 * 获取单条数据
 	 * @param entity
@@ -45,7 +45,7 @@ public abstract class CrudService<M extends BaseMapper<T>, T extends DataEntity<
 	public T get(T entity) {
 		return mapper.get(entity);
 	}
-	
+
 	/**
 	 * 查询列表数据
 	 * @param entity
@@ -66,7 +66,7 @@ public abstract class CrudService<M extends BaseMapper<T>, T extends DataEntity<
 		dataRuleFilter(entity);
 		return mapper.findAllList(entity);
 	}
-	
+
 	/**
 	 * 查询分页数据
 	 * @param page 分页对象
@@ -79,6 +79,7 @@ public abstract class CrudService<M extends BaseMapper<T>, T extends DataEntity<
 		page.setList(mapper.findList(entity));
 		return page;
 	}
+
 
 	/**
 	 * 保存数据（插入或更新）
@@ -104,8 +105,8 @@ public abstract class CrudService<M extends BaseMapper<T>, T extends DataEntity<
 	public void delete(T entity) {
 		mapper.delete(entity);
 	}
-	
-	
+
+
 	/**
 	 * 删除全部数据
 	 * @param entitys
@@ -128,7 +129,7 @@ public abstract class CrudService<M extends BaseMapper<T>, T extends DataEntity<
 		}
 	}
 
-	
+
 	/**
 	 * 获取单条数据
 	 * @param propertyName, value
@@ -161,5 +162,6 @@ public abstract class CrudService<M extends BaseMapper<T>, T extends DataEntity<
 	public void executeDeleteSql(String sql){
 		mapper.execDeleteSql(sql);
 	}
+
 
 }

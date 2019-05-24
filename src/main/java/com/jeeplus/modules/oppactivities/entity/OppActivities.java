@@ -9,6 +9,8 @@ import javax.validation.constraints.NotNull;
 
 import com.jeeplus.core.persistence.DataEntity;
 import com.jeeplus.common.utils.excel.annotation.ExcelField;
+import com.jeeplus.modules.opportunity.entity.Opportunity;
+import com.jeeplus.modules.sys.entity.User;
 
 /**
  * 商机跟进Entity
@@ -26,15 +28,16 @@ public class OppActivities extends DataEntity<OppActivities> {
 	private String detail;		// 跟进内容
 	private String empID;		// 跟进人编号
 	private Date billDate;		// 记录时间
-	
+
+	private User activitieUser;//跟进人
+
+	private Opportunity opportunity;//商机
 	public OppActivities() {
 		super();
 	}
-
 	public OppActivities(String id){
 		super(id);
 	}
-
 	@ExcelField(title="商机编号", align=2, sort=1)
 	public String getOppId() {
 		return oppId;
@@ -109,5 +112,19 @@ public class OppActivities extends DataEntity<OppActivities> {
 	public void setBillDate(Date billDate) {
 		this.billDate = billDate;
 	}
-	
+
+	@ExcelField(title="跟进人", fieldType=User.class, value="activitieUser.name", align=2, sort=9)
+	public User getActivitieUser() {
+		return activitieUser;
+	}
+
+	public void setActivitieUser(User activitieUser) {
+		this.activitieUser = activitieUser;
+	}
+
+	@ExcelField(title = "商机",fieldType = Opportunity.class,align = 2,sort = 10)
+	public Opportunity getOpportunity(){
+		return opportunity;
+	}
+	public void setOpportunity(Opportunity opportunity){this.opportunity=opportunity;}
 }
